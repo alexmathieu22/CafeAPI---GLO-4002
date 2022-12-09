@@ -1,6 +1,4 @@
-package ca.ulaval.glo4002.cafe.service.exception;
-
-import ca.ulaval.glo4002.cafe.domain.exception.CafeException;
+package ca.ulaval.glo4002.cafe.domain.exception;
 
 public class CafeNotFoundException extends CafeException {
     public CafeNotFoundException() {

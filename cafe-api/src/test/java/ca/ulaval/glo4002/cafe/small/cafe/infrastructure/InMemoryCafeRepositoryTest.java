@@ -4,10 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.domain.Cafe;
+import ca.ulaval.glo4002.cafe.domain.CafeRepository;
+import ca.ulaval.glo4002.cafe.domain.exception.CafeNotFoundException;
 import ca.ulaval.glo4002.cafe.fixture.CafeFixture;
 import ca.ulaval.glo4002.cafe.infrastructure.InMemoryCafeRepository;
-import ca.ulaval.glo4002.cafe.service.CafeRepository;
-import ca.ulaval.glo4002.cafe.service.exception.CafeNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
