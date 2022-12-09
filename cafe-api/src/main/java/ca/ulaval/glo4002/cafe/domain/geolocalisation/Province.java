@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.cafe.domain;
+package ca.ulaval.glo4002.cafe.domain.geolocalisation;
 
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidConfigurationCountryException;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Tax;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.bill;
 
-import ca.ulaval.glo4002.cafe.domain.Location;
 import ca.ulaval.glo4002.cafe.domain.TipRate;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Tax;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Order;
@@ -17,7 +17,7 @@ public class BillFactory {
 
     private Amount getOrderSubtotal(Order order) {
         return new Amount(order.items().stream()
-                .map(coffee -> coffee.price().value())
-                .reduce(0f, Float::sum));
+            .map(coffee -> coffee.price().value())
+            .reduce(0f, Float::sum));
     }
 }
