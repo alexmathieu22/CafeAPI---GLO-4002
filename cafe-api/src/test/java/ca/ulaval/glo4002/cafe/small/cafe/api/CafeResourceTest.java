@@ -11,19 +11,19 @@ import ca.ulaval.glo4002.cafe.api.request.CheckInRequest;
 import ca.ulaval.glo4002.cafe.api.request.CheckOutRequest;
 import ca.ulaval.glo4002.cafe.api.request.ConfigurationRequest;
 import ca.ulaval.glo4002.cafe.api.request.InventoryRequest;
+import ca.ulaval.glo4002.cafe.application.CafeService;
+import ca.ulaval.glo4002.cafe.application.customer.CustomerService;
+import ca.ulaval.glo4002.cafe.application.customer.parameter.CheckInCustomerParams;
+import ca.ulaval.glo4002.cafe.application.customer.parameter.CheckOutCustomerParams;
+import ca.ulaval.glo4002.cafe.application.dto.InventoryDTO;
+import ca.ulaval.glo4002.cafe.application.dto.LayoutDTO;
+import ca.ulaval.glo4002.cafe.application.parameter.ConfigurationParams;
+import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
 import ca.ulaval.glo4002.cafe.domain.CafeName;
 import ca.ulaval.glo4002.cafe.fixture.request.CheckInRequestFixture;
 import ca.ulaval.glo4002.cafe.fixture.request.CheckOutRequestFixture;
 import ca.ulaval.glo4002.cafe.fixture.request.ConfigurationRequestFixture;
 import ca.ulaval.glo4002.cafe.fixture.request.InventoryRequestFixture;
-import ca.ulaval.glo4002.cafe.service.CafeService;
-import ca.ulaval.glo4002.cafe.service.customer.CustomerService;
-import ca.ulaval.glo4002.cafe.service.customer.parameter.CheckInCustomerParams;
-import ca.ulaval.glo4002.cafe.service.customer.parameter.CheckOutCustomerParams;
-import ca.ulaval.glo4002.cafe.service.dto.InventoryDTO;
-import ca.ulaval.glo4002.cafe.service.dto.LayoutDTO;
-import ca.ulaval.glo4002.cafe.service.parameter.ConfigurationParams;
-import ca.ulaval.glo4002.cafe.service.parameter.IngredientsParams;
 
 import jakarta.ws.rs.core.Response;
 
