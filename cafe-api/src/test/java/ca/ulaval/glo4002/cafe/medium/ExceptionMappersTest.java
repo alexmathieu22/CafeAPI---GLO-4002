@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.CafeServer;
 import ca.ulaval.glo4002.cafe.api.exception.response.ErrorResponse;
 import ca.ulaval.glo4002.cafe.fixture.FakeExceptionThrowerContextFixture;
-import ca.ulaval.glo4002.config.ApplicationContext;
+import ca.ulaval.glo4002.context.ApplicationContext;
 
 import static io.restassured.RestAssured.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
