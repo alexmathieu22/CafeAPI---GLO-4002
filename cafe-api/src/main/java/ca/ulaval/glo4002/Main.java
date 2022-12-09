@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002;
 
 import ca.ulaval.glo4002.config.ApplicationContext;
-import ca.ulaval.glo4002.config.CafeServer;
 import ca.ulaval.glo4002.config.ProductionApplicationContext;
 
 public class Main {
