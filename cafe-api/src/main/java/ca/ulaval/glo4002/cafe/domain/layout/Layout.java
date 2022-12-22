@@ -7,12 +7,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import ca.ulaval.glo4002.cafe.domain.TipRate;
+import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNotFoundException;
 import ca.ulaval.glo4002.cafe.domain.exception.DuplicateCubeNameException;
 import ca.ulaval.glo4002.cafe.domain.exception.InsufficientSeatsException;
 import ca.ulaval.glo4002.cafe.domain.exception.NoGroupSeatsException;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
-import ca.ulaval.glo4002.cafe.domain.inventory.Inventory;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.Cube;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeFactory;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
@@ -21,8 +21,6 @@ import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.Seat;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.SeatNumber;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Customer;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.bill.Bill;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Order;
 import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 
 public class Layout {
@@ -41,13 +39,6 @@ public class Layout {
     public Seat getSeatByCustomerId(CustomerId customerId) {
         return getSeatsFromCubes().stream().filter(Seat::isCurrentlyOccupied).filter(seat -> customerId.equals(seat.getCustomer().get().getId())).findFirst()
             .orElseThrow(CustomerNotFoundException::new);
-    }
-
-    public Order getOrderByCustomerId(CustomerId customerId) {
-        Seat seatWithCustomer =
-            getSeatsFromCubes().stream().filter(Seat::isCurrentlyOccupied).filter(seat -> customerId.equals(seat.getCustomer().get().getId())).findFirst()
-                .orElseThrow(CustomerNotFoundException::new);
-        return seatWithCustomer.getCustomer().get().getOrder();
     }
 
     public void assignSeatToIndividual(Customer customer) {
@@ -105,10 +96,10 @@ public class Layout {
         return cubes.stream().map(Cube::getSeats).flatMap(List::stream).toList();
     }
 
-    public Bill checkout(CustomerId customerId, Location location, TipRate groupTipRate) {
+    public void checkout(CustomerId customerId) {
         Seat seat = getSeatByCustomerId(customerId);
         removeReservationIfLastMember(seat);
-        return seat.checkout(location, groupTipRate);
+        seat.checkout();
     }
 
     private void removeReservationIfLastMember(Seat seat) {
@@ -119,22 +110,22 @@ public class Layout {
         }
     }
 
+    private boolean isLastFromGroup(GroupName groupName) {
+        return getSeatsFromCubes().stream().filter(seat -> groupName.equals(seat.getGroupName().orElse(null))).filter(Seat::isCurrentlyOccupied).count() == 1;
+    }
+
     private void removeNotUsedReservationForTheGroup(GroupName groupName) {
         getSeatsFromCubes().stream().filter(seat -> groupName.equals(seat.getGroupName().orElse(null)) && seat.isCurrentlyReserved())
             .forEach(Seat::removeReservation);
-    }
-
-    private boolean isLastFromGroup(GroupName groupName) {
-        return getSeatsFromCubes().stream().filter(seat -> groupName.equals(seat.getGroupName().orElse(null))).filter(Seat::isCurrentlyOccupied).count() == 1;
     }
 
     public boolean isCustomerAlreadySeated(CustomerId customerId) {
         return getSeatsFromCubes().stream().filter(Seat::isCurrentlyOccupied).anyMatch(seat -> customerId.equals(seat.getCustomer().get().getId()));
     }
 
-    public void placeOrder(CustomerId customerId, Order order, Inventory inventory) {
-        Seat seat = getSeatByCustomerId(customerId);
-        inventory.useIngredients(order.ingredientsNeeded());
-        seat.placeOrder(order);
+    public void verifyIfCustomerIsAlreadySeated(CustomerId customerId) {
+        if (!isCustomerAlreadySeated(customerId)) {
+            throw new CustomerNotFoundException();
+        }
     }
 }

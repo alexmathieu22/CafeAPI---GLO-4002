@@ -24,7 +24,7 @@ import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerFactory;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerName;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 import ca.ulaval.glo4002.cafe.fixture.OrderFixture;
 import ca.ulaval.glo4002.cafe.infrastructure.InMemoryCafeRepository;
 
@@ -42,18 +42,18 @@ public class CustomerServiceTest {
     CafeRepository cafeRepository;
     InventoryService inventoryService;
 
-    private void initializeCafe(CafeFactory cafeFactory, CafeRepository cafeRepository) {
+    private void initializeCafe(CafeRepository cafeRepository) {
+        CafeFactory cafeFactory = new CafeFactory();
         Cafe cafe = cafeFactory.createCafe();
         cafeRepository.saveOrUpdate(cafe);
     }
 
     @BeforeEach
     public void instanciateAttributes() {
-        CafeFactory cafeFactory = new CafeFactory();
         cafeRepository = new InMemoryCafeRepository();
         customerService = new CustomerService(cafeRepository, new CustomerFactory());
         inventoryService = new InventoryService(cafeRepository);
-        initializeCafe(cafeFactory, cafeRepository);
+        initializeCafe(cafeRepository);
     }
 
     @Test

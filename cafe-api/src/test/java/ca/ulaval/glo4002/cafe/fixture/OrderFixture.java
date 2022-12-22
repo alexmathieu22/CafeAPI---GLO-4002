@@ -2,9 +2,9 @@ package ca.ulaval.glo4002.cafe.fixture;
 
 import java.util.List;
 
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Coffee;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.CoffeeType;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 
 public class OrderFixture {
     private List<Coffee> items = List.of(new Coffee(CoffeeType.Americano));

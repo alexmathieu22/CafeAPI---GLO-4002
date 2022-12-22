@@ -9,9 +9,9 @@ import ca.ulaval.glo4002.cafe.api.customer.assembler.BillResponseAssembler;
 import ca.ulaval.glo4002.cafe.api.customer.response.BillResponse;
 import ca.ulaval.glo4002.cafe.application.customer.dto.BillDTO;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Coffee;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.CoffeeType;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 import ca.ulaval.glo4002.cafe.fixture.BillFixture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
