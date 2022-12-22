@@ -48,16 +48,16 @@ public class CustomerResource {
     }
 
     @GET
-    @Path("/{customerId}/bill")
-    public Response getCustomerBill(@PathParam("customerId") String customerId) {
-        BillResponse billResponse = billResponseAssembler.toBillResponse(customersService.getCustomerBill(new CustomerId(customerId)));
-        return Response.ok(billResponse).build();
-    }
-
-    @GET
     @Path("/{customerId}/orders")
     public Response getOrders(@PathParam("customerId") String customerId) {
         OrdersResponse ordersResponse = ordersResponseAssembler.toOrdersResponse(customersService.getOrder(new CustomerId(customerId)));
         return Response.ok(ordersResponse).build();
+    }
+
+    @GET
+    @Path("/{customerId}/bill")
+    public Response getCustomerBill(@PathParam("customerId") String customerId) {
+        BillResponse billResponse = billResponseAssembler.toBillResponse(customersService.getCustomerBill(new CustomerId(customerId)));
+        return Response.ok(billResponse).build();
     }
 }

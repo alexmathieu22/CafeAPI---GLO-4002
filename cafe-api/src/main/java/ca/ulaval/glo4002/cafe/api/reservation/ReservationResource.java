@@ -26,16 +26,16 @@ public class ReservationResource {
         this.reservationService = reservationService;
     }
 
+    @GET
+    public Response getReservations() {
+        List<ReservationResponse> reservations = reservationResponseAssembler.toReservationsResponse(reservationService.getReservations());
+        return Response.ok(reservations).build();
+    }
+
     @POST
     public Response postReservation(@Valid ReservationRequest reservationRequest) {
         ReservationRequestParams requestParams = ReservationRequestParams.from(reservationRequest.group_name, reservationRequest.group_size);
         reservationService.makeReservation(requestParams);
         return Response.ok().build();
-    }
-
-    @GET
-    public Response getReservations() {
-        List<ReservationResponse> reservations = reservationResponseAssembler.toReservationsResponse(reservationService.getReservations());
-        return Response.ok(reservations).build();
     }
 }
