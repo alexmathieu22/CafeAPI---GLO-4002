@@ -9,7 +9,6 @@ import ca.ulaval.glo4002.cafe.application.CafeService;
 import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
-import ca.ulaval.glo4002.cafe.domain.CafeName;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNoBillException;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Customer;
@@ -22,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CafeServiceTest {
-    private static final CafeName NEW_CAFE_NAME = new CafeName("Les 4-Ogres");
     private static final Customer A_CUSTOMER = new CustomerFixture().build();
     private static final Reservation A_RESERVATION = new ReservationFixture().build();
     private static final IngredientsParams INGREDIENT_PARAMS = new IngredientsParams(25, 20, 15, 10);
