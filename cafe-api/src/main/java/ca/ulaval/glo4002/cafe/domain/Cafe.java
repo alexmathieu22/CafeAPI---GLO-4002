@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import ca.ulaval.glo4002.cafe.domain.billing.BillingSystem;
+import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
+import ca.ulaval.glo4002.cafe.domain.billing.bill.BillFactory;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerAlreadyVisitedException;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNoBillException;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNotFoundException;
@@ -20,8 +23,8 @@ import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.Seat;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Customer;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.bill.Bill;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.OrderingSystem;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 import ca.ulaval.glo4002.cafe.domain.reservation.Reservation;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationStrategyFactory;
@@ -33,6 +36,8 @@ public class Cafe {
     private final List<Reservation> reservations = new ArrayList<>();
     private final HashMap<CustomerId, Bill> bills = new HashMap<>();
     private final Inventory inventory;
+    private final OrderingSystem orderingSystem;
+    private final BillingSystem billingSystem;
     private TipRate groupTipRate;
     private CubeSize cubeSize;
     private CafeName cafeName;
@@ -46,6 +51,8 @@ public class Cafe {
         this.layout = layoutFactory.createLayout(cafeConfiguration.cubeSize(), cubeNames);
 
         this.inventory = new Inventory();
+        this.orderingSystem = new OrderingSystem();
+        this.billingSystem = new BillingSystem(new BillFactory());
 
         updateConfiguration(cafeConfiguration);
     }
@@ -84,7 +91,8 @@ public class Cafe {
     }
 
     public Order getOrderByCustomerId(CustomerId customerId) {
-        return layout.getOrderByCustomerId(customerId);
+        layout.verifyIfCustomerIsAlreadySeated(customerId);
+        return orderingSystem.getOrderByCustomerId(customerId);
     }
 
     public void makeReservation(Reservation reservation) {
@@ -95,18 +103,22 @@ public class Cafe {
 
     public void close() {
         layout.reset(cubeSize);
-        clearReservations();
-        clearBills();
-        clearInventory();
+        reservations.clear();
+        orderingSystem.clear();
+        billingSystem.clear();
+        inventory.clear();
     }
 
     public void checkOut(CustomerId customerId) {
-        Bill bill = layout.checkout(customerId, location, groupTipRate);
-        bills.put(customerId, bill);
+        Seat seat = this.layout.getSeatByCustomerId(customerId);
+        boolean isCustomerInGroup = seat.isReservedForGroup();
+        this.layout.checkout(customerId);
+        billingSystem.createBill(customerId, orderingSystem, location, groupTipRate, isCustomerInGroup);
     }
 
     public void placeOrder(CustomerId customerId, Order order) {
-        layout.placeOrder(customerId, order, inventory);
+        layout.verifyIfCustomerIsAlreadySeated(customerId);
+        orderingSystem.placeOrder(customerId, order, inventory);
     }
 
     public void addIngredientsToInventory(List<Ingredient> ingredients) {
@@ -114,26 +126,18 @@ public class Cafe {
     }
 
     public Bill getCustomerBill(CustomerId customerId) {
-        if (!bills.containsKey(customerId)) {
+        if (!billingSystem.hasBillForCustomerId(customerId)) {
             if (layout.isCustomerAlreadySeated(customerId)) {
                 throw new CustomerNoBillException();
             } else {
                 throw new CustomerNotFoundException();
             }
         }
-        return bills.get(customerId);
-    }
-
-    private void clearInventory() {
-        inventory.clear();
-    }
-
-    private void clearBills() {
-        bills.clear();
+        return billingSystem.getBillByCustomerId(customerId);
     }
 
     private void checkIfCustomerAlreadyVisitedToday(CustomerId customerId) {
-        if (bills.containsKey(customerId) || layout.isCustomerAlreadySeated(customerId)) {
+        if (billingSystem.hasBillForCustomerId(customerId) || layout.isCustomerAlreadySeated(customerId)) {
             throw new CustomerAlreadyVisitedException();
         }
     }
@@ -160,9 +164,5 @@ public class Cafe {
         if (reservations.stream().map(Reservation::name).toList().contains(name)) {
             throw new DuplicateGroupNameException();
         }
-    }
-
-    private void clearReservations() {
-        reservations.clear();
     }
 }

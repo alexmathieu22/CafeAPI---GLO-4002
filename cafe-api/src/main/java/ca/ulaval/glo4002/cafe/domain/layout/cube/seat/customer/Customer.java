@@ -3,10 +3,10 @@ package ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer;
 import java.util.List;
 
 import ca.ulaval.glo4002.cafe.domain.TipRate;
+import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
+import ca.ulaval.glo4002.cafe.domain.billing.bill.BillFactory;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.bill.Bill;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.bill.BillFactory;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 
 public class Customer {
     private final CustomerId id;
@@ -26,14 +26,6 @@ public class Customer {
 
     public CustomerName getName() {
         return name;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void placeOrder(Order otherOrder) {
-        order = order.addAll(otherOrder);
     }
 
     public Bill createBill(Location location, TipRate groupTipRate, boolean isInGroup) {

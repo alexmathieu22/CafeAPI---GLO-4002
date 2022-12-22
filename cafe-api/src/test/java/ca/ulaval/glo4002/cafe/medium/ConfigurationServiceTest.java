@@ -19,27 +19,26 @@ public class ConfigurationServiceTest {
         "QC", "", 5);
 
     private ConfigurationService configurationService;
-    private Cafe cafe;
     private CafeRepository cafeRepository;
 
-    private void initializeCafe(CafeFactory cafeFactory, CafeRepository cafeRepository) {
+    private void initializeCafe(CafeRepository cafeRepository) {
+        CafeFactory cafeFactory = new CafeFactory();
         Cafe cafe = cafeFactory.createCafe();
         cafeRepository.saveOrUpdate(cafe);
     }
 
     @BeforeEach
     public void instanciateAttributes() {
-        CafeFactory cafeFactory = new CafeFactory();
         cafeRepository = new InMemoryCafeRepository();
         configurationService = new ConfigurationService(cafeRepository);
-        initializeCafe(cafeFactory, cafeRepository);
+        initializeCafe(cafeRepository);
     }
 
     @Test
     public void whenUpdatingConfiguration_shouldUpdateConfiguration() {
         configurationService.updateConfiguration(CONFIGURATION_PARAMS);
 
-        cafe = cafeRepository.get();
+        Cafe cafe = cafeRepository.get();
         assertEquals(NEW_CAFE_NAME, cafe.getName());
     }
 }

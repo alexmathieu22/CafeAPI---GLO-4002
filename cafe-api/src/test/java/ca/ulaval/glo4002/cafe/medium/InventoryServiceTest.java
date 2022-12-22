@@ -18,7 +18,6 @@ public class InventoryServiceTest {
     private static final IngredientsParams INGREDIENT_PARAMS = new IngredientsParams(25, 20, 15, 10);
 
     private InventoryService inventoryService;
-    private Cafe cafe;
     private CafeRepository cafeRepository;
 
     private void initializeCafe(CafeFactory cafeFactory, CafeRepository cafeRepository) {
