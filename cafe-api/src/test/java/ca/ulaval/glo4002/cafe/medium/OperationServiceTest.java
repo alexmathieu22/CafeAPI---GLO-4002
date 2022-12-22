@@ -5,7 +5,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.cafe.application.CafeService;
+import ca.ulaval.glo4002.cafe.application.inventory.InventoryService;
+import ca.ulaval.glo4002.cafe.application.operation.OperationService;
 import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
@@ -20,12 +21,13 @@ import ca.ulaval.glo4002.cafe.infrastructure.InMemoryCafeRepository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CafeServiceTest {
+public class OperationServiceTest {
     private static final Customer A_CUSTOMER = new CustomerFixture().build();
     private static final Reservation A_RESERVATION = new ReservationFixture().build();
     private static final IngredientsParams INGREDIENT_PARAMS = new IngredientsParams(25, 20, 15, 10);
 
-    private CafeService cafeService;
+    private OperationService operationService;
+    private InventoryService inventoryService;
     private Cafe cafe;
     private CafeRepository cafeRepository;
 
@@ -38,7 +40,7 @@ public class CafeServiceTest {
     public void instanciateAttributes() {
         CafeFactory cafeFactory = new CafeFactory();
         cafeRepository = new InMemoryCafeRepository();
-        cafeService = new CafeService(cafeRepository, cafeFactory);
+        operationService = new OperationService(cafeRepository);
         initializeCafe(cafeFactory, cafeRepository);
         cafe = cafeRepository.get();
     }
@@ -47,7 +49,7 @@ public class CafeServiceTest {
     public void givenAReservation_whenClosing_shouldClearReservations() {
         cafe.makeReservation(A_RESERVATION);
 
-        cafeService.closeCafe();
+        operationService.closeCafe();
 
         cafe = cafeRepository.get();
         assertEquals(0, cafe.getReservations().size());
@@ -58,7 +60,7 @@ public class CafeServiceTest {
         cafe.checkIn(A_CUSTOMER, Optional.empty());
         cafe.checkOut(A_CUSTOMER.getId());
 
-        cafeService.closeCafe();
+        operationService.closeCafe();
         cafe.checkIn(A_CUSTOMER, Optional.empty());
 
         cafe = cafeRepository.get();
@@ -67,10 +69,11 @@ public class CafeServiceTest {
 
     @Test
     public void givenNonEmptyInventory_whenClosing_shouldClearInventory() {
-        cafeService.addIngredientsToInventory(INGREDIENT_PARAMS);
+        inventoryService = new InventoryService(cafeRepository);
+        inventoryService.addIngredientsToInventory(INGREDIENT_PARAMS);
 
-        cafeService.closeCafe();
+        operationService.closeCafe();
 
-        assertEquals(0, cafeService.getInventory().ingredients().size());
+        assertEquals(0, inventoryService.getInventory().ingredients().size());
     }
 }
