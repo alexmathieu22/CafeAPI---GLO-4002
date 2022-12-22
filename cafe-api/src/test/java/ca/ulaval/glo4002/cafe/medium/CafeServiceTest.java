@@ -51,13 +51,6 @@ public class CafeServiceTest {
     }
 
     @Test
-    public void whenUpdatingConfiguration_shouldUpdateConfiguration() {
-        cafeService.updateConfiguration(CONFIGURATION_PARAMS);
-
-        assertEquals(NEW_CAFE_NAME, cafeService.getLayout().name());
-    }
-
-    @Test
     public void givenAReservation_whenClosing_shouldClearReservations() {
         cafe.makeReservation(A_RESERVATION);
 
