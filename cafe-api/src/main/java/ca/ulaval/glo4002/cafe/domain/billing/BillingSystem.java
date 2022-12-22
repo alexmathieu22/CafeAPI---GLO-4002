@@ -13,7 +13,11 @@ import ca.ulaval.glo4002.cafe.domain.ordering.OrderingSystem;
 
 public class BillingSystem {
     private HashMap<CustomerId, Bill> bills = new HashMap<>();
-    private BillFactory billFactory = new BillFactory();
+    private BillFactory billFactory;
+
+    public BillingSystem(BillFactory billFactory) {
+        this.billFactory = billFactory;
+    }
 
     public void createBill(CustomerId customerId, OrderingSystem orderingSystem, Location location, TipRate groupTipRate, boolean isInGroup) {
         Bill bill = billFactory.createBill(orderingSystem.getOrderByCustomerId(customerId), location, groupTipRate, isInGroup);

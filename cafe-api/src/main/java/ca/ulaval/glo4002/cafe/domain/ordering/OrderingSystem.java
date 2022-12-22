@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.cafe.domain.ordering;
 import java.util.HashMap;
 import java.util.List;
 
-import ca.ulaval.glo4002.cafe.domain.exception.CustomerNotFoundException;
 import ca.ulaval.glo4002.cafe.domain.inventory.Inventory;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;

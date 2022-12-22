@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import ca.ulaval.glo4002.cafe.domain.billing.BillingSystem;
 import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
+import ca.ulaval.glo4002.cafe.domain.billing.bill.BillFactory;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerAlreadyVisitedException;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNoBillException;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNotFoundException;
@@ -51,7 +52,7 @@ public class Cafe {
 
         this.inventory = new Inventory();
         this.orderingSystem = new OrderingSystem();
-        this.billingSystem = new BillingSystem();
+        this.billingSystem = new BillingSystem(new BillFactory());
 
         updateConfiguration(cafeConfiguration);
     }
