@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer;
 
 import java.util.List;
 
-import ca.ulaval.glo4002.cafe.domain.Location;
 import ca.ulaval.glo4002.cafe.domain.TipRate;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.bill.Bill;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.bill.BillFactory;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.order.Order;

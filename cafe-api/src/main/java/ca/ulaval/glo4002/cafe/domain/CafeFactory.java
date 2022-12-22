@@ -3,6 +3,8 @@ package ca.ulaval.glo4002.cafe.domain;
 import java.util.List;
 import java.util.Optional;
 
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;

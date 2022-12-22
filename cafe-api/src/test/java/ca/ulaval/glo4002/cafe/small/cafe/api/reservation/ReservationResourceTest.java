@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.api.reservation.ReservationResource;
 import ca.ulaval.glo4002.cafe.api.reservation.request.ReservationRequest;
+import ca.ulaval.glo4002.cafe.application.reservation.ReservationService;
+import ca.ulaval.glo4002.cafe.application.reservation.dto.ReservationDTO;
+import ca.ulaval.glo4002.cafe.application.reservation.parameter.ReservationRequestParams;
 import ca.ulaval.glo4002.cafe.fixture.request.ReservationRequestFixture;
-import ca.ulaval.glo4002.cafe.service.reservation.ReservationService;
-import ca.ulaval.glo4002.cafe.service.reservation.dto.ReservationDTO;
-import ca.ulaval.glo4002.cafe.service.reservation.parameter.ReservationRequestParams;
 
 import jakarta.ws.rs.core.Response;
 
