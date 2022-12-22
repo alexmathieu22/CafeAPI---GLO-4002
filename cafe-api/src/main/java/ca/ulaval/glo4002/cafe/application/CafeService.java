@@ -20,11 +20,6 @@ public class CafeService {
         this.cafeFactory = cafeFactory;
     }
 
-    public void initializeCafe() {
-        Cafe cafe = cafeFactory.createCafe();
-        cafeRepository.saveOrUpdate(cafe);
-    }
-
     public LayoutDTO getLayout() {
         Cafe cafe = cafeRepository.get();
         return LayoutDTO.fromCafe(cafe);

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.api.configuration.ConfigurationResource;
 import ca.ulaval.glo4002.cafe.api.configuration.request.ConfigurationRequest;
-import ca.ulaval.glo4002.cafe.application.CafeService;
+import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
 import ca.ulaval.glo4002.cafe.application.parameter.ConfigurationParams;
 import ca.ulaval.glo4002.cafe.fixture.request.ConfigurationRequestFixture;
 
@@ -24,13 +24,13 @@ public class ConfigurationResourceTest {
     private static final String STATE = "";
     private static final int GROUP_TIP_RATE = 0;
 
-    private CafeService cafeService;
+    private ConfigurationService configurationService;
     private ConfigurationResource configurationResource;
 
     @BeforeEach
     public void createConfigurationResource() {
-        cafeService = mock(CafeService.class);
-        configurationResource = new ConfigurationResource(cafeService);
+        configurationService = mock(ConfigurationService.class);
+        configurationResource = new ConfigurationResource(configurationService);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class ConfigurationResourceTest {
 
         configurationResource.updateConfiguration(configurationRequest);
 
-        verify(cafeService).updateConfiguration(configurationParams);
+        verify(configurationService).updateConfiguration(configurationParams);
     }
 
     @Test

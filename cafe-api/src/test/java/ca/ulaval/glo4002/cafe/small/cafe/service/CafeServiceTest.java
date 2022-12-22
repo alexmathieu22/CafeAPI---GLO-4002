@@ -37,22 +37,6 @@ public class CafeServiceTest {
     }
 
     @Test
-    public void whenInitializingCafe_shouldCreateCafe() {
-        cafeService.initializeCafe();
-
-        verify(cafeFactory).createCafe();
-    }
-
-    @Test
-    public void whenInitializingCafe_shouldSaveCafe() {
-        when(cafeFactory.createCafe()).thenReturn(A_CAFE);
-
-        cafeService.initializeCafe();
-
-        verify(cafeRepository).saveOrUpdate(A_CAFE);
-    }
-
-    @Test
     public void whenGettingLayout_shouldGetCafe() {
         when(cafeRepository.get()).thenReturn(A_CAFE);
 

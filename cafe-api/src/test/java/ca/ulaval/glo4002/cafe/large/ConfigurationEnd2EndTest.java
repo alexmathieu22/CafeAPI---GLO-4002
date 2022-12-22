@@ -25,7 +25,6 @@ class ConfigurationEnd2EndTest {
     private static final String BASE_URL = "http://localhost:8181";
     private static final String AN_ORGANISATION_NAME = "MyLittleCafe";
     private static final int A_CUBE_SIZE = 5;
-    private static final String A_VALID_ID = "test_ID";
     private static final String A_VALID_GROUP_NAME = "test_group";
 
     private TestServer server;

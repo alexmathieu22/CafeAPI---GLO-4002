@@ -15,6 +15,7 @@ import ca.ulaval.glo4002.cafe.application.customer.parameter.CheckInCustomerPara
 import ca.ulaval.glo4002.cafe.application.customer.parameter.CheckOutCustomerParams;
 import ca.ulaval.glo4002.cafe.application.customer.parameter.CustomerOrderParams;
 import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
+import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNotFoundException;
@@ -41,12 +42,18 @@ public class CustomerServiceTest {
     CafeRepository cafeRepository;
     CafeService cafeService;
 
+    private void initializeCafe(CafeFactory cafeFactory, CafeRepository cafeRepository) {
+        Cafe cafe = cafeFactory.createCafe();
+        cafeRepository.saveOrUpdate(cafe);
+    }
+
     @BeforeEach
     public void instanciateAttributes() {
+        CafeFactory cafeFactory = new CafeFactory();
         cafeRepository = new InMemoryCafeRepository();
         customerService = new CustomerService(cafeRepository, new CustomerFactory());
-        cafeService = new CafeService(cafeRepository, new CafeFactory());
-        cafeService.initializeCafe();
+        cafeService = new CafeService(cafeRepository, cafeFactory);
+        initializeCafe(cafeFactory, cafeRepository);
     }
 
     @Test

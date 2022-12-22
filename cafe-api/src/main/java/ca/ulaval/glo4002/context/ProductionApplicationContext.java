@@ -13,8 +13,10 @@ import ca.ulaval.glo4002.cafe.api.layout.LayoutResource;
 import ca.ulaval.glo4002.cafe.api.operation.OperationResource;
 import ca.ulaval.glo4002.cafe.api.reservation.ReservationResource;
 import ca.ulaval.glo4002.cafe.application.CafeService;
+import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
 import ca.ulaval.glo4002.cafe.application.customer.CustomerService;
 import ca.ulaval.glo4002.cafe.application.reservation.ReservationService;
+import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerFactory;
@@ -25,16 +27,18 @@ public class ProductionApplicationContext implements ApplicationContext {
     private static final int PORT = 8181;
 
     public ResourceConfig initializeResourceConfig() {
+        CafeFactory cafeFactory = new CafeFactory();
         CafeRepository cafeRepository = new InMemoryCafeRepository();
 
         ReservationService groupService = new ReservationService(cafeRepository, new ReservationFactory());
         CustomerService customersService = new CustomerService(cafeRepository, new CustomerFactory());
-        CafeService cafeService = new CafeService(cafeRepository, new CafeFactory());
+        CafeService cafeService = new CafeService(cafeRepository, cafeFactory);
+        ConfigurationService configurationService = new ConfigurationService(cafeRepository);
 
-        cafeService.initializeCafe();
+        initializeCafe(cafeFactory, cafeRepository);
 
         return new ResourceConfig().packages("ca.ulaval.glo4002.cafe").property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true)
-            .register(new ConfigurationResource(cafeService))
+            .register(new ConfigurationResource(configurationService))
             .register(new CustomerResource(customersService))
             .register(new InventoryResource(cafeService))
             .register(new LayoutResource(cafeService))
@@ -47,5 +51,10 @@ public class ProductionApplicationContext implements ApplicationContext {
 
     public int getPort() {
         return PORT;
+    }
+
+    private void initializeCafe(CafeFactory cafeFactory, CafeRepository cafeRepository) {
+        Cafe cafe = cafeFactory.createCafe();
+        cafeRepository.saveOrUpdate(cafe);
     }
 }
