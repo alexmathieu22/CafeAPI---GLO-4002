@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.cafe.api.configuration;
 
 import ca.ulaval.glo4002.cafe.api.configuration.request.ConfigurationRequest;
-import ca.ulaval.glo4002.cafe.application.CafeService;
 import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
 import ca.ulaval.glo4002.cafe.application.parameter.ConfigurationParams;
 

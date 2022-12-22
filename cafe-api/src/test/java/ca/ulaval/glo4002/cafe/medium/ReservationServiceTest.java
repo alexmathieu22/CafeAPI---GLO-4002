@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.cafe.medium;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.cafe.application.CafeService;
 import ca.ulaval.glo4002.cafe.application.reservation.ReservationService;
 import ca.ulaval.glo4002.cafe.application.reservation.dto.ReservationDTO;
 import ca.ulaval.glo4002.cafe.application.reservation.parameter.ReservationRequestParams;
