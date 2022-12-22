@@ -16,6 +16,7 @@ import ca.ulaval.glo4002.cafe.application.CafeService;
 import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
 import ca.ulaval.glo4002.cafe.application.customer.CustomerService;
 import ca.ulaval.glo4002.cafe.application.inventory.InventoryService;
+import ca.ulaval.glo4002.cafe.application.layout.LayoutService;
 import ca.ulaval.glo4002.cafe.application.reservation.ReservationService;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
@@ -32,10 +33,11 @@ public class ProductionApplicationContext implements ApplicationContext {
         CafeRepository cafeRepository = new InMemoryCafeRepository();
 
         ReservationService groupService = new ReservationService(cafeRepository, new ReservationFactory());
-        CustomerService customersService = new CustomerService(cafeRepository, new CustomerFactory());
         CafeService cafeService = new CafeService(cafeRepository, cafeFactory);
         ConfigurationService configurationService = new ConfigurationService(cafeRepository);
+        CustomerService customersService = new CustomerService(cafeRepository, new CustomerFactory());
         InventoryService inventoryService = new InventoryService(cafeRepository);
+        LayoutService layoutService = new LayoutService(cafeRepository);
 
         initializeCafe(cafeFactory, cafeRepository);
 
@@ -43,7 +45,7 @@ public class ProductionApplicationContext implements ApplicationContext {
             .register(new ConfigurationResource(configurationService))
             .register(new CustomerResource(customersService))
             .register(new InventoryResource(inventoryService))
-            .register(new LayoutResource(cafeService))
+            .register(new LayoutResource(layoutService))
             .register(new OperationResource(cafeService, customersService))
             .register(new ReservationResource(groupService))
             .register(new CafeExceptionMapper())
