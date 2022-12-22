@@ -1,16 +1,10 @@
 package ca.ulaval.glo4002.cafe.small.cafe.application;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.application.CafeService;
-import ca.ulaval.glo4002.cafe.application.dto.InventoryDTO;
 import ca.ulaval.glo4002.cafe.application.dto.LayoutDTO;
-import ca.ulaval.glo4002.cafe.application.parameter.ConfigurationParams;
-import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
@@ -21,8 +15,6 @@ import static org.mockito.Mockito.*;
 
 public class CafeServiceTest {
     private static final Cafe A_CAFE = new CafeFixture().build();
-    private static final ConfigurationParams A_CONFIGURATION_PARAMS = new ConfigurationParams(4, "Les 4-Fées", "Default", "CA", "QC", "", 5);
-    private static final IngredientsParams AN_INGREDIENTS_PARAMS = new IngredientsParams(1, 2, 3, 4);
     private CafeService cafeService;
     private CafeRepository cafeRepository;
     private CafeFactory cafeFactory;
@@ -81,55 +73,5 @@ public class CafeServiceTest {
         cafeService.closeCafe();
 
         verify(cafeRepository).saveOrUpdate(mockCafe);
-    }
-
-    @Test
-    public void whenAddingIngredientsToInventory_shouldGetCafe() {
-        Cafe mockCafe = mock(Cafe.class);
-        when(cafeRepository.get()).thenReturn(mockCafe);
-
-        cafeService.addIngredientsToInventory(AN_INGREDIENTS_PARAMS);
-
-        verify(cafeRepository).get();
-    }
-
-    @Test
-    public void whenAddingIngredientsToInventory_shouldAddIngredientsInInventory() {
-        Cafe mockCafe = mock(Cafe.class);
-        when(cafeRepository.get()).thenReturn(mockCafe);
-
-        cafeService.addIngredientsToInventory(AN_INGREDIENTS_PARAMS);
-
-        verify(mockCafe).addIngredientsToInventory(
-            List.of(AN_INGREDIENTS_PARAMS.chocolate(), AN_INGREDIENTS_PARAMS.milk(), AN_INGREDIENTS_PARAMS.water(), AN_INGREDIENTS_PARAMS.espresso()));
-    }
-
-    @Test
-    public void whenAddingIngredientsToInventory_shouldUpdateCafe() {
-        Cafe mockCafe = mock(Cafe.class);
-        when(cafeRepository.get()).thenReturn(mockCafe);
-
-        cafeService.addIngredientsToInventory(AN_INGREDIENTS_PARAMS);
-
-        verify(cafeRepository).saveOrUpdate(mockCafe);
-    }
-
-    @Test
-    public void whenGettingInventory_shouldGetCafe() {
-        when(cafeRepository.get()).thenReturn(A_CAFE);
-
-        cafeService.getInventory();
-
-        verify(cafeRepository).get();
-    }
-
-    @Test
-    public void whenGettingInventory_shouldReturnInventoryDTO() {
-        when(cafeRepository.get()).thenReturn(A_CAFE);
-        InventoryDTO expectedInventoryDTO = new InventoryDTO(new HashMap<>());
-
-        InventoryDTO actualInventoryDTO = cafeService.getInventory();
-
-        assertEquals(expectedInventoryDTO, actualInventoryDTO);
     }
 }

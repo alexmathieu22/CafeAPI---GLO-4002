@@ -6,15 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.application.CafeService;
-import ca.ulaval.glo4002.cafe.application.dto.InventoryDTO;
-import ca.ulaval.glo4002.cafe.application.parameter.ConfigurationParams;
 import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
 import ca.ulaval.glo4002.cafe.domain.CafeName;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNoBillException;
-import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Customer;
 import ca.ulaval.glo4002.cafe.domain.reservation.Reservation;
 import ca.ulaval.glo4002.cafe.fixture.CustomerFixture;
@@ -29,8 +26,6 @@ public class CafeServiceTest {
     private static final Customer A_CUSTOMER = new CustomerFixture().build();
     private static final Reservation A_RESERVATION = new ReservationFixture().build();
     private static final IngredientsParams INGREDIENT_PARAMS = new IngredientsParams(25, 20, 15, 10);
-    private static final ConfigurationParams CONFIGURATION_PARAMS = new ConfigurationParams(5, NEW_CAFE_NAME.value(), "Default", "CA",
-        "QC", "", 5);
 
     private CafeService cafeService;
     private Cafe cafe;
@@ -79,16 +74,5 @@ public class CafeServiceTest {
         cafeService.closeCafe();
 
         assertEquals(0, cafeService.getInventory().ingredients().size());
-    }
-
-    @Test
-    public void whenAddingIngredientsToInventory_shouldAddIngredientsToInventory() {
-        cafeService.addIngredientsToInventory(INGREDIENT_PARAMS);
-
-        InventoryDTO inventory = cafeService.getInventory();
-        assertEquals(INGREDIENT_PARAMS.chocolate().quantity(), inventory.ingredients().get(IngredientType.Chocolate).quantity());
-        assertEquals(INGREDIENT_PARAMS.milk().quantity(), inventory.ingredients().get(IngredientType.Milk).quantity());
-        assertEquals(INGREDIENT_PARAMS.water().quantity(), inventory.ingredients().get(IngredientType.Water).quantity());
-        assertEquals(INGREDIENT_PARAMS.espresso().quantity(), inventory.ingredients().get(IngredientType.Espresso).quantity());
     }
 }

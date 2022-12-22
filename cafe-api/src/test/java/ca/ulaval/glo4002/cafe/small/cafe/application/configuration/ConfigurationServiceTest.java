@@ -20,7 +20,7 @@ public class ConfigurationServiceTest {
     private CafeRepository cafeRepository;
 
     @BeforeEach
-    public void instanciateAttributes() {
+    public void createConfigurationService() {
         cafeRepository = mock(CafeRepository.class);
         configurationService = new ConfigurationService(cafeRepository);
     }
