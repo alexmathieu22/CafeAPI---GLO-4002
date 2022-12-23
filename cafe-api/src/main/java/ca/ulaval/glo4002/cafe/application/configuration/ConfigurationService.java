@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.cafe.application.configuration;
 
 import ca.ulaval.glo4002.cafe.application.parameter.ConfigurationParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
-import ca.ulaval.glo4002.cafe.domain.CafeConfiguration;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
 
 public class ConfigurationService {
     CafeRepository cafeRepository;

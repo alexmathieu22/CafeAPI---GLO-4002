@@ -5,11 +5,11 @@ import java.util.Map;
 
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 
 public class OrderFixture {
     private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),

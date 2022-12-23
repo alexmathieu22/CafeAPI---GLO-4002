@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.cafe.domain.geolocalisation;
 
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidConfigurationCountryException;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Tax;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
 
 public enum Province {
     AB(new Tax(0)),

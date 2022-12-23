@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer;
+package ca.ulaval.glo4002.cafe.domain.valueobjects;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

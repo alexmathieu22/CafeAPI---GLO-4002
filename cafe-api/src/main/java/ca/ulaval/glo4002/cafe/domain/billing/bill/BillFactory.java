@@ -1,16 +1,14 @@
 package ca.ulaval.glo4002.cafe.domain.billing.bill;
 
-import ca.ulaval.glo4002.cafe.domain.TipRate;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Tax;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 
 public class BillFactory {
-    public Bill createBill(Order order, Location location, TipRate groupTipRate, boolean isInGroup) {
+    public Bill createBill(Order order, Tax taxRate, TipRate groupTipRate, boolean isInGroup) {
         Amount subtotal = getOrderSubtotal(order);
-        Tax taxPercentage = location.getTaxPercentage();
-        Amount taxes = new Amount(subtotal.value() * taxPercentage.value());
+        Amount taxes = new Amount(subtotal.value() * taxRate.value());
         Amount tip = isInGroup ? new Amount(subtotal.value() * groupTipRate.value()) : new Amount(0);
         return new Bill(new Order(order.items()), subtotal, taxes, tip);
     }

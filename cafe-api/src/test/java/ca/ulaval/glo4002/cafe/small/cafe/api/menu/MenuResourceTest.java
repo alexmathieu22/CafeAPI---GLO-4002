@@ -12,9 +12,9 @@ import ca.ulaval.glo4002.cafe.application.menu.MenuService;
 import ca.ulaval.glo4002.cafe.application.menu.parameter.NewCoffeeParams;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 import ca.ulaval.glo4002.cafe.fixture.request.IngredientsRequestFixture;
 
 import jakarta.ws.rs.core.Response;

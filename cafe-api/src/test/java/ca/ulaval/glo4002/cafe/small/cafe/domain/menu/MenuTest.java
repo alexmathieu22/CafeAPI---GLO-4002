@@ -10,11 +10,11 @@ import ca.ulaval.glo4002.cafe.domain.exception.DuplicateCoffeeNameException;
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidMenuOrderException;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Menu;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,8 +1,8 @@
-package ca.ulaval.glo4002.cafe.small.cafe.domain.layout.cube.seat.customer;
+package ca.ulaval.glo4002.cafe.small.cafe.domain.geolocalisation.taxing;
 
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Tax;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

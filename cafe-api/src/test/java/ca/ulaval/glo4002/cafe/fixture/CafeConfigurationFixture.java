@@ -2,15 +2,15 @@ package ca.ulaval.glo4002.cafe.fixture;
 
 import java.util.Optional;
 
-import ca.ulaval.glo4002.cafe.domain.CafeConfiguration;
-import ca.ulaval.glo4002.cafe.domain.CafeName;
-import ca.ulaval.glo4002.cafe.domain.TipRate;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Province;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.State;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 
 public class CafeConfigurationFixture {
     private CubeSize cubeSize = new CubeSize(4);

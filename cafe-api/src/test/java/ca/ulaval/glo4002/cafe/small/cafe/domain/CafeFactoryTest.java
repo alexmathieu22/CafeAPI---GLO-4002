@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
-import ca.ulaval.glo4002.cafe.domain.CafeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.Cube;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

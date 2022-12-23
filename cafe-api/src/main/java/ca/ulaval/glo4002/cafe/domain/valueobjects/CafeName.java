@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.cafe.domain;
+package ca.ulaval.glo4002.cafe.domain.valueobjects;
 
 public record CafeName(String value) {
     public CafeName {

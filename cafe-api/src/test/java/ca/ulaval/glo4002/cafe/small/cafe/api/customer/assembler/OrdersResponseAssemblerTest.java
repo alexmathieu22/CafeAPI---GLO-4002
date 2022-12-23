@@ -11,10 +11,10 @@ import ca.ulaval.glo4002.cafe.api.customer.response.OrdersResponse;
 import ca.ulaval.glo4002.cafe.application.customer.dto.OrderDTO;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 import ca.ulaval.glo4002.cafe.fixture.OrderFixture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
