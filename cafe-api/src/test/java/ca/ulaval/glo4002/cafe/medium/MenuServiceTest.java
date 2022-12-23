@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.cafe.application.menu.MenuService;
 import ca.ulaval.glo4002.cafe.application.menu.parameter.NewCoffeeParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
-import ca.ulaval.glo4002.cafe.domain.CafeFactory;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
@@ -18,6 +17,7 @@ import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 import ca.ulaval.glo4002.cafe.infrastructure.InMemoryCafeRepository;
+import ca.ulaval.glo4002.cafe.util.CafeInitializer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MenuServiceTest {
+    private static final CafeInitializer CAFE_INITIALIZER = new CafeInitializer();
     private static final Coffee A_COFFEE = new Coffee(new CoffeeType("NewLatte"), new Amount(2.95f),
         new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Milk, new Quantity(50))));
     private static final NewCoffeeParams A_NEW_COFFEE_PARAMS = NewCoffeeParams.from("NewCoffee", 2.95f, 0, 50, 0, 50);
@@ -33,18 +34,12 @@ public class MenuServiceTest {
     private CafeRepository cafeRepository;
     private CoffeeFactory coffeeFactory;
 
-    private void initializeCafe(CafeRepository cafeRepository) {
-        CafeFactory cafeFactory = new CafeFactory();
-        Cafe cafe = cafeFactory.createCafe();
-        cafeRepository.saveOrUpdate(cafe);
-    }
-
     @BeforeEach
     public void instanciateAttributes() {
         coffeeFactory = mock(CoffeeFactory.class);
         cafeRepository = new InMemoryCafeRepository();
         menuService = new MenuService(cafeRepository, coffeeFactory);
-        initializeCafe(cafeRepository);
+        CAFE_INITIALIZER.initializeCafe(cafeRepository);
     }
 
     @Test

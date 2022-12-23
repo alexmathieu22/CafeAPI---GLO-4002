@@ -15,8 +15,6 @@ import ca.ulaval.glo4002.cafe.application.customer.parameter.CheckOutCustomerPar
 import ca.ulaval.glo4002.cafe.application.customer.parameter.CustomerOrderParams;
 import ca.ulaval.glo4002.cafe.application.inventory.InventoryService;
 import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
-import ca.ulaval.glo4002.cafe.domain.Cafe;
-import ca.ulaval.glo4002.cafe.domain.CafeFactory;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNotFoundException;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.SeatNumber;
@@ -27,10 +25,12 @@ import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 import ca.ulaval.glo4002.cafe.fixture.OrderFixture;
 import ca.ulaval.glo4002.cafe.infrastructure.InMemoryCafeRepository;
+import ca.ulaval.glo4002.cafe.util.CafeInitializer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerServiceTest {
+    private static final CafeInitializer CAFE_INITIALIZER = new CafeInitializer();
     private static final CustomerId A_CUSTOMER_ID = new CustomerId("123");
     private static final String A_CUSTOMER_NAME = "Joe";
     private static final CheckInCustomerParams CHECK_IN_CUSTOMER_PARAMS = new CheckInCustomerParams(A_CUSTOMER_ID.value(), A_CUSTOMER_NAME, null);
@@ -42,18 +42,12 @@ public class CustomerServiceTest {
     CafeRepository cafeRepository;
     InventoryService inventoryService;
 
-    private void initializeCafe(CafeRepository cafeRepository) {
-        CafeFactory cafeFactory = new CafeFactory();
-        Cafe cafe = cafeFactory.createCafe();
-        cafeRepository.saveOrUpdate(cafe);
-    }
-
     @BeforeEach
     public void instanciateAttributes() {
         cafeRepository = new InMemoryCafeRepository();
         customerService = new CustomerService(cafeRepository, new CustomerFactory());
         inventoryService = new InventoryService(cafeRepository);
-        initializeCafe(cafeRepository);
+        CAFE_INITIALIZER.initializeCafe(cafeRepository);
     }
 
     @Test

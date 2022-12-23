@@ -1,29 +1,19 @@
 package ca.ulaval.glo4002.cafe.domain;
 
 import java.util.List;
-import java.util.Optional;
 
 import ca.ulaval.glo4002.cafe.domain.billing.TipRate;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
-import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
 import ca.ulaval.glo4002.cafe.domain.taxing.Location;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
 
 public class CafeFactory {
-    private static final CafeName CAFE_NAME = new CafeName("Les 4-Fées");
-    private static final CubeSize CUBE_SIZE = new CubeSize(4);
-    private static final List<CubeName> CUBE_NAMES =
-        List.of(new CubeName("Wanda"), new CubeName("Tinker Bell"),
-            new CubeName("Bloom"), new CubeName("Merryweather"));
-    private static final ReservationType RESERVATION_STRATEGY_TYPE = ReservationType.Default;
-    private static final TipRate GROUP_TIP_RATE = new TipRate(0);
-    private static final Location LOCATION = new Location(CountryTax.None, Optional.empty(), Optional.empty());
-
-    public Cafe createCafe() {
-        CafeConfiguration cafeConfiguration = new CafeConfiguration(CUBE_SIZE, CAFE_NAME, RESERVATION_STRATEGY_TYPE, LOCATION, GROUP_TIP_RATE);
-        return new Cafe(CUBE_NAMES, cafeConfiguration);
+    public Cafe createCafe(CubeSize cubeSize, CafeName cafeName, ReservationType reservationType, Location location, TipRate groupTipRate,
+                           List<CubeName> cubeNames) {
+        CafeConfiguration cafeConfiguration = new CafeConfiguration(cubeSize, cafeName, reservationType, location, groupTipRate);
+        return new Cafe(cubeNames, cafeConfiguration);
     }
 }

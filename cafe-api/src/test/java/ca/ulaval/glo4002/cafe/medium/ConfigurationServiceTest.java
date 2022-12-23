@@ -6,14 +6,15 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
 import ca.ulaval.glo4002.cafe.application.parameter.ConfigurationParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
-import ca.ulaval.glo4002.cafe.domain.CafeFactory;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
 import ca.ulaval.glo4002.cafe.infrastructure.InMemoryCafeRepository;
+import ca.ulaval.glo4002.cafe.util.CafeInitializer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConfigurationServiceTest {
+    private static final CafeInitializer CAFE_INITIALIZER = new CafeInitializer();
     private static final CafeName NEW_CAFE_NAME = new CafeName("Les 4-Ogres");
     private static final ConfigurationParams CONFIGURATION_PARAMS = new ConfigurationParams(5, NEW_CAFE_NAME.value(), "Default", "CA",
         "QC", "", 5);
@@ -21,17 +22,11 @@ public class ConfigurationServiceTest {
     private ConfigurationService configurationService;
     private CafeRepository cafeRepository;
 
-    private void initializeCafe(CafeRepository cafeRepository) {
-        CafeFactory cafeFactory = new CafeFactory();
-        Cafe cafe = cafeFactory.createCafe();
-        cafeRepository.saveOrUpdate(cafe);
-    }
-
     @BeforeEach
     public void instanciateAttributes() {
         cafeRepository = new InMemoryCafeRepository();
         configurationService = new ConfigurationService(cafeRepository);
-        initializeCafe(cafeRepository);
+        CAFE_INITIALIZER.initializeCafe(cafeRepository);
     }
 
     @Test
