@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.cafe.api.customer;
 
+import java.util.List;
+
 import ca.ulaval.glo4002.cafe.api.customer.assembler.BillResponseAssembler;
 import ca.ulaval.glo4002.cafe.api.customer.assembler.CustomerResponseAssembler;
 import ca.ulaval.glo4002.cafe.api.customer.assembler.OrdersResponseAssembler;
@@ -9,7 +11,10 @@ import ca.ulaval.glo4002.cafe.api.customer.response.CustomerResponse;
 import ca.ulaval.glo4002.cafe.api.customer.response.OrdersResponse;
 import ca.ulaval.glo4002.cafe.application.customer.CustomerService;
 import ca.ulaval.glo4002.cafe.application.customer.parameter.CustomerOrderParams;
+import ca.ulaval.glo4002.cafe.application.menu.MenuService;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 
 import jakarta.validation.Valid;
 import jakarta.ws.rs.GET;
@@ -24,12 +29,14 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
     private final CustomerService customersService;
+    private final MenuService menuService;
     private final CustomerResponseAssembler customerResponseAssembler = new CustomerResponseAssembler();
     private final BillResponseAssembler billResponseAssembler = new BillResponseAssembler();
     private final OrdersResponseAssembler ordersResponseAssembler = new OrdersResponseAssembler();
 
-    public CustomerResource(CustomerService customersService) {
+    public CustomerResource(CustomerService customersService, MenuService menuService) {
         this.customersService = customersService;
+        this.menuService = menuService;
     }
 
     @GET
@@ -42,7 +49,10 @@ public class CustomerResource {
     @PUT
     @Path("/{customerId}/orders")
     public Response putOrderForCustomer(@PathParam("customerId") String customerId, @Valid OrderRequest orderRequest) {
-        CustomerOrderParams customerOrderParams = CustomerOrderParams.from(customerId, orderRequest.orders);
+        List<CoffeeType> coffeeTypesOrder = orderRequest.orders.stream().map(CoffeeType::new).toList();
+        List<Coffee> coffees = menuService.getCoffeesFromCoffeeTypes(coffeeTypesOrder);
+        CustomerOrderParams customerOrderParams = new CustomerOrderParams(customerId, coffees);
+
         customersService.placeOrder(customerOrderParams);
         return Response.ok().build();
     }

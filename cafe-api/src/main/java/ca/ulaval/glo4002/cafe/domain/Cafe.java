@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.cafe.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,16 +15,24 @@ import ca.ulaval.glo4002.cafe.domain.exception.DuplicateGroupNameException;
 import ca.ulaval.glo4002.cafe.domain.exception.NoReservationsFoundException;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
+import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Inventory;
+import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.Layout;
 import ca.ulaval.glo4002.cafe.domain.layout.LayoutFactory;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.Seat;
+import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Customer;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.ordering.OrderingSystem;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeFactory;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Menu;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
 import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 import ca.ulaval.glo4002.cafe.domain.reservation.Reservation;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationStrategyFactory;
@@ -34,8 +42,8 @@ public class Cafe {
     private final ReservationStrategyFactory reservationStrategyFactory;
     private final Layout layout;
     private final List<Reservation> reservations = new ArrayList<>();
-    private final HashMap<CustomerId, Bill> bills = new HashMap<>();
     private final Inventory inventory;
+    private final Menu menu;
     private final OrderingSystem orderingSystem;
     private final BillingSystem billingSystem;
     private TipRate groupTipRate;
@@ -51,6 +59,35 @@ public class Cafe {
         this.layout = layoutFactory.createLayout(cafeConfiguration.cubeSize(), cubeNames);
 
         this.inventory = new Inventory();
+        CoffeeFactory coffeeFactory = new CoffeeFactory();
+        this.menu = new Menu(new ArrayList<>(Arrays.asList(
+            coffeeFactory.createCoffee(new CoffeeType("Americano"), new Amount(2.25f), new Recipe(List.of(
+                new Ingredient(IngredientType.Espresso, new Quantity(50)),
+                new Ingredient(IngredientType.Water, new Quantity(50))))),
+            coffeeFactory.createCoffee(new CoffeeType("Dark Roast"), new Amount(2.10f), new Recipe(List.of(
+                new Ingredient(IngredientType.Espresso, new Quantity(40)),
+                new Ingredient(IngredientType.Water, new Quantity(40)),
+                new Ingredient(IngredientType.Chocolate, new Quantity(10)),
+                new Ingredient(IngredientType.Milk, new Quantity(10))))),
+            coffeeFactory.createCoffee(new CoffeeType("Cappuccino"), new Amount(3.29f), new Recipe(List.of(
+                new Ingredient(IngredientType.Espresso, new Quantity(50)),
+                new Ingredient(IngredientType.Water, new Quantity(40)),
+                new Ingredient(IngredientType.Milk, new Quantity(10))))),
+            coffeeFactory.createCoffee(new CoffeeType("Espresso"), new Amount(2.95f), new Recipe(List.of(
+                new Ingredient(IngredientType.Espresso, new Quantity(60))))),
+            coffeeFactory.createCoffee(new CoffeeType("Flat White"), new Amount(3.75f), new Recipe(List.of(
+                new Ingredient(IngredientType.Espresso, new Quantity(50)),
+                new Ingredient(IngredientType.Milk, new Quantity(50))))),
+            coffeeFactory.createCoffee(new CoffeeType("Latte"), new Amount(2.95f), new Recipe(List.of(
+                new Ingredient(IngredientType.Espresso, new Quantity(50)),
+                new Ingredient(IngredientType.Milk, new Quantity(50))))),
+            coffeeFactory.createCoffee(new CoffeeType("Macchiato"), new Amount(4.75f), new Recipe(List.of(
+                new Ingredient(IngredientType.Espresso, new Quantity(80)),
+                new Ingredient(IngredientType.Milk, new Quantity(20))))),
+            coffeeFactory.createCoffee(new CoffeeType("Mocha"), new Amount(4.15f), new Recipe(List.of(
+                new Ingredient(IngredientType.Espresso, new Quantity(50)),
+                new Ingredient(IngredientType.Milk, new Quantity(40)),
+                new Ingredient(IngredientType.Chocolate, new Quantity(10))))))));
         this.orderingSystem = new OrderingSystem();
         this.billingSystem = new BillingSystem(new BillFactory());
 
@@ -86,6 +123,12 @@ public class Cafe {
         assignSeatToCustomer(customer, groupName);
     }
 
+    private void checkIfCustomerAlreadyVisitedToday(CustomerId customerId) {
+        if (billingSystem.hasBillForCustomerId(customerId) || layout.isCustomerAlreadySeated(customerId)) {
+            throw new CustomerAlreadyVisitedException();
+        }
+    }
+
     public Seat getSeatByCustomerId(CustomerId customerId) {
         return layout.getSeatByCustomerId(customerId);
     }
@@ -101,12 +144,19 @@ public class Cafe {
         reservations.add(reservation);
     }
 
+    private void checkIfGroupNameAlreadyExists(GroupName name) {
+        if (reservations.stream().map(Reservation::name).toList().contains(name)) {
+            throw new DuplicateGroupNameException();
+        }
+    }
+
     public void close() {
         layout.reset(cubeSize);
         reservations.clear();
         orderingSystem.clear();
         billingSystem.clear();
         inventory.clear();
+        menu.clear();
     }
 
     public void checkOut(CustomerId customerId) {
@@ -116,9 +166,13 @@ public class Cafe {
         billingSystem.createBill(customerId, orderingSystem, location, groupTipRate, isCustomerInGroup);
     }
 
+    public void addCoffeeToMenu(Coffee coffee) {
+        this.menu.addCoffee(coffee);
+    }
+
     public void placeOrder(CustomerId customerId, Order order) {
         layout.verifyIfCustomerIsAlreadySeated(customerId);
-        orderingSystem.placeOrder(customerId, order, inventory);
+        orderingSystem.placeOrder(customerId, order, this.inventory);
     }
 
     public void addIngredientsToInventory(List<Ingredient> ingredients) {
@@ -134,12 +188,6 @@ public class Cafe {
             }
         }
         return billingSystem.getBillByCustomerId(customerId);
-    }
-
-    private void checkIfCustomerAlreadyVisitedToday(CustomerId customerId) {
-        if (billingSystem.hasBillForCustomerId(customerId) || layout.isCustomerAlreadySeated(customerId)) {
-            throw new CustomerAlreadyVisitedException();
-        }
     }
 
     private void assignSeatToCustomer(Customer customer, Optional<GroupName> groupName) {
@@ -160,9 +208,7 @@ public class Cafe {
         throw new NoReservationsFoundException();
     }
 
-    private void checkIfGroupNameAlreadyExists(GroupName name) {
-        if (reservations.stream().map(Reservation::name).toList().contains(name)) {
-            throw new DuplicateGroupNameException();
-        }
+    public Coffee getCoffeeByCoffeeType(CoffeeType coffeeType) {
+        return menu.getCoffeeByCoffeeType(coffeeType);
     }
 }

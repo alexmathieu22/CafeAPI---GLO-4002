@@ -6,9 +6,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.cafe.api.inventory.request.InventoryRequest;
 import ca.ulaval.glo4002.cafe.api.inventory.response.InventoryResponse;
-import ca.ulaval.glo4002.cafe.fixture.request.InventoryRequestFixture;
+import ca.ulaval.glo4002.cafe.api.request.IngredientsRequest;
+import ca.ulaval.glo4002.cafe.fixture.request.IngredientsRequestFixture;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -52,22 +52,22 @@ public class InventoryEnd2EndTest {
 
     @Test
     public void whenPuttingInventory_shouldReturn200() {
-        InventoryRequest inventoryRequest =
-            new InventoryRequestFixture().withChocolate(A_VALID_STOCK).withEspresso(A_VALID_STOCK).withMilk(A_VALID_STOCK).withWater(A_VALID_STOCK).build();
+        IngredientsRequest ingredientsRequest =
+            new IngredientsRequestFixture().withChocolate(A_VALID_STOCK).withEspresso(A_VALID_STOCK).withMilk(A_VALID_STOCK).withWater(A_VALID_STOCK).build();
 
-        Response response = given().contentType("application/json").body(inventoryRequest).when().put(BASE_URL + "/inventory");
+        Response response = given().contentType("application/json").body(ingredientsRequest).when().put(BASE_URL + "/inventory");
 
         assertEquals(200, response.getStatusCode());
     }
 
     @Test
     public void whenPuttingInventory_shouldAddToInventory() {
-        InventoryRequest inventoryRequest =
-            new InventoryRequestFixture().withChocolate(A_VALID_STOCK).withEspresso(A_VALID_STOCK).withMilk(A_VALID_STOCK).withWater(A_VALID_STOCK).build();
+        IngredientsRequest ingredientsRequest =
+            new IngredientsRequestFixture().withChocolate(A_VALID_STOCK).withEspresso(A_VALID_STOCK).withMilk(A_VALID_STOCK).withWater(A_VALID_STOCK).build();
 
-        given().contentType("application/json").body(inventoryRequest).when().put(BASE_URL + "/inventory");
+        given().contentType("application/json").body(ingredientsRequest).when().put(BASE_URL + "/inventory");
 
-        Response inventoryResponse = given().contentType("application/json").body(inventoryRequest).when().get(BASE_URL + "/inventory");
+        Response inventoryResponse = given().contentType("application/json").body(ingredientsRequest).when().get(BASE_URL + "/inventory");
         InventoryResponse body = inventoryResponse.getBody().as(InventoryResponse.class);
         assertEquals(A_VALID_STOCK, body.Chocolate());
         assertEquals(A_VALID_STOCK, body.Espresso());

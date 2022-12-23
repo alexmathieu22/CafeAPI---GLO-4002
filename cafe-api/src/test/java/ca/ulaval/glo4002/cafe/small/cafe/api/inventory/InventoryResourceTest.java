@@ -6,11 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.api.inventory.InventoryResource;
-import ca.ulaval.glo4002.cafe.api.inventory.request.InventoryRequest;
+import ca.ulaval.glo4002.cafe.api.request.IngredientsRequest;
 import ca.ulaval.glo4002.cafe.application.dto.InventoryDTO;
 import ca.ulaval.glo4002.cafe.application.inventory.InventoryService;
 import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
-import ca.ulaval.glo4002.cafe.fixture.request.InventoryRequestFixture;
+import ca.ulaval.glo4002.cafe.fixture.request.IngredientsRequestFixture;
 
 import jakarta.ws.rs.core.Response;
 
@@ -35,21 +35,21 @@ public class InventoryResourceTest {
 
     @Test
     public void givenValidRequest_whenAddingIngredients_shouldAddIngredientsToInventory() {
-        InventoryRequest inventoryRequest =
-            new InventoryRequestFixture().withChocolate(CHOCOLATE).withMilk(MILK).withEspresso(ESPRESSO).withWater(WATER).build();
+        IngredientsRequest ingredientsRequest =
+            new IngredientsRequestFixture().withChocolate(CHOCOLATE).withMilk(MILK).withEspresso(ESPRESSO).withWater(WATER).build();
         IngredientsParams ingredientsParams = new IngredientsParams(CHOCOLATE, MILK, WATER, ESPRESSO);
 
-        inventoryResource.putInventory(inventoryRequest);
+        inventoryResource.putInventory(ingredientsRequest);
 
         verify(inventoryService).addIngredientsToInventory(ingredientsParams);
     }
 
     @Test
     public void givenValidRequest_whenAddingIngredients_shouldReturn200() {
-        InventoryRequest inventoryRequest =
-            new InventoryRequestFixture().withChocolate(CHOCOLATE).withMilk(MILK).withEspresso(ESPRESSO).withWater(WATER).build();
+        IngredientsRequest ingredientsRequest =
+            new IngredientsRequestFixture().withChocolate(CHOCOLATE).withMilk(MILK).withEspresso(ESPRESSO).withWater(WATER).build();
 
-        Response response = inventoryResource.putInventory(inventoryRequest);
+        Response response = inventoryResource.putInventory(ingredientsRequest);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }

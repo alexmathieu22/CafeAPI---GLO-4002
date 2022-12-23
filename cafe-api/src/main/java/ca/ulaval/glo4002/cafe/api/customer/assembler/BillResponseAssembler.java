@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.cafe.application.customer.dto.BillDTO;
 
 public class BillResponseAssembler {
     public BillResponse toBillResponse(BillDTO billDTO) {
-        return new BillResponse(billDTO.coffees().stream().map(coffee -> coffee.coffeeType().toString()).toList(), billDTO.subtotal().getRoundedValue(),
+        return new BillResponse(billDTO.coffees().stream().map(coffee -> coffee.coffeeType().value()).toList(), billDTO.subtotal().getRoundedValue(),
             billDTO.taxes().getRoundedValue(), billDTO.tip().getRoundedValue(), billDTO.total().getRoundedValue());
     }
 }

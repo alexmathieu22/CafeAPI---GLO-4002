@@ -1,8 +1,8 @@
-package ca.ulaval.glo4002.cafe.api.inventory.request;
+package ca.ulaval.glo4002.cafe.api.request;
 
 import jakarta.validation.constraints.NotNull;
 
-public class InventoryRequest {
+public class IngredientsRequest {
     @NotNull(message = "The Chocolate quantity may not be null")
     public int Chocolate;
 

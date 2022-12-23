@@ -14,11 +14,18 @@ import ca.ulaval.glo4002.cafe.application.customer.dto.BillDTO;
 import ca.ulaval.glo4002.cafe.application.customer.dto.CustomerDTO;
 import ca.ulaval.glo4002.cafe.application.customer.dto.OrderDTO;
 import ca.ulaval.glo4002.cafe.application.customer.parameter.CustomerOrderParams;
+import ca.ulaval.glo4002.cafe.application.menu.MenuService;
+import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
+import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
+import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.SeatNumber;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerName;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
 import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 import ca.ulaval.glo4002.cafe.fixture.request.OrderRequestFixture;
 
@@ -37,15 +44,21 @@ public class CustomerResourceTest {
     private static final CustomerDTO A_CUSTOMER_DTO = new CustomerDTO(CUSTOMER_NAME, SEAT_NUMBER, Optional.of(GROUP_NAME));
     private static final BillDTO A_BILL_DTO = new BillDTO(ORDER.items(), AMOUNT, AMOUNT, AMOUNT, AMOUNT);
     private static final OrderDTO A_ORDER_DTO = new OrderDTO(new ArrayList<>());
-    private static final List<String> LIST_OF_COFFEE = List.of("Latte");
+    private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
+        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+    private static final List<Coffee> LIST_OF_A_COFFEE = List.of(A_COFFEE);
+    private static final List<CoffeeType> LIST_OF_A_COFFEE_TYPE = List.of(new CoffeeType("Latte"));
+    private static final List<String> LIST_OF_A_COFFEE_STRING = List.of("Latte");
 
     private CustomerResource customerResource;
     private CustomerService customerService;
+    private MenuService menuService;
 
     @BeforeEach
     public void createCustomerResource() {
         customerService = mock(CustomerService.class);
-        customerResource = new CustomerResource(customerService);
+        menuService = mock(MenuService.class);
+        customerResource = new CustomerResource(customerService, menuService);
     }
 
     @Test
@@ -68,10 +81,9 @@ public class CustomerResourceTest {
 
     @Test
     public void whenPuttingOrderForCustomer_shouldPlaceOrderForCustomer() {
-        OrderRequest orderRequest = new OrderRequestFixture()
-            .withOrders(LIST_OF_COFFEE)
-            .build();
-        CustomerOrderParams customerOrderParams = new CustomerOrderParams(CUSTOMER_ID.value(), orderRequest.orders);
+        when(menuService.getCoffeesFromCoffeeTypes(LIST_OF_A_COFFEE_TYPE)).thenReturn(LIST_OF_A_COFFEE);
+        OrderRequest orderRequest = new OrderRequestFixture().withOrders(LIST_OF_A_COFFEE_STRING).build();
+        CustomerOrderParams customerOrderParams = new CustomerOrderParams(CUSTOMER_ID.value(), LIST_OF_A_COFFEE);
 
         customerResource.putOrderForCustomer(CUSTOMER_ID.value(), orderRequest);
 
@@ -80,9 +92,7 @@ public class CustomerResourceTest {
 
     @Test
     public void givenValidRequestAndValidCustomerID_whenPuttingOrderForCustomer_shouldReturn200() {
-        OrderRequest orderRequest = new OrderRequestFixture()
-            .withOrders(LIST_OF_COFFEE)
-            .build();
+        OrderRequest orderRequest = new OrderRequestFixture().withOrders(LIST_OF_A_COFFEE_STRING).build();
 
         Response response = customerResource.putOrderForCustomer(CUSTOMER_ID.value(), orderRequest);
 

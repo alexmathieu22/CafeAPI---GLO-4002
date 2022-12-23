@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.cafe.api.inventory;
 
 import ca.ulaval.glo4002.cafe.api.inventory.assembler.InventoryResponseAssembler;
-import ca.ulaval.glo4002.cafe.api.inventory.request.InventoryRequest;
 import ca.ulaval.glo4002.cafe.api.inventory.response.InventoryResponse;
+import ca.ulaval.glo4002.cafe.api.request.IngredientsRequest;
 import ca.ulaval.glo4002.cafe.application.inventory.InventoryService;
 import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
 
@@ -33,9 +33,9 @@ public class InventoryResource {
 
     @PUT
     @Path("/inventory")
-    public Response putInventory(@Valid InventoryRequest inventoryRequest) {
+    public Response putInventory(@Valid IngredientsRequest ingredientsRequest) {
         IngredientsParams ingredientsParams =
-            IngredientsParams.from(inventoryRequest.Chocolate, inventoryRequest.Milk, inventoryRequest.Water, inventoryRequest.Espresso);
+            IngredientsParams.from(ingredientsRequest.Chocolate, ingredientsRequest.Milk, ingredientsRequest.Water, ingredientsRequest.Espresso);
         inventoryService.addIngredientsToInventory(ingredientsParams);
         return Response.status(200).build();
     }
