@@ -36,6 +36,7 @@ import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
 import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 import ca.ulaval.glo4002.cafe.domain.reservation.GroupSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.Reservation;
@@ -60,7 +61,9 @@ public class CafeTest {
     private static final Reservation ANOTHER_RESERVATION_FOR_TWO =
         new ReservationFixture().withGroupName(new GroupName("Another")).withGroupSize(new GroupSize(2)).build();
     private static final Order AN_ORDER = new OrderFixture().build();
-    private static final Order ANOTHER_ORDER = new OrderFixture().withItems(List.of(new Coffee(CoffeeType.Espresso))).build();
+    private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
+        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+    private static final Order ANOTHER_ORDER = new OrderFixture().withItems(List.of(A_COFFEE)).build();
 
     @Test
     public void whenCreatingCafe_shouldHaveNoReservations() {

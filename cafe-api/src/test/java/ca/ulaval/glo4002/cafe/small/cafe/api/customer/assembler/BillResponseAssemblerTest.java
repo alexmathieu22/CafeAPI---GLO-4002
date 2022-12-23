@@ -8,17 +8,25 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.cafe.api.customer.assembler.BillResponseAssembler;
 import ca.ulaval.glo4002.cafe.api.customer.response.BillResponse;
 import ca.ulaval.glo4002.cafe.application.customer.dto.BillDTO;
+import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
+import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
+import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
 import ca.ulaval.glo4002.cafe.fixture.BillFixture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BillResponseAssemblerTest {
-    private static final Order A_COFFEE_ORDER = new Order(
-        List.of(new Coffee(CoffeeType.Espresso), new Coffee(CoffeeType.Espresso), new Coffee(CoffeeType.Latte), new Coffee(CoffeeType.Americano)));
+    private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
+        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+    private static final Coffee ANOTHER_COFFEE = new Coffee(new CoffeeType("Americano"), new Amount(2.25f),
+        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Water, new Quantity(50)))));
+
+    private static final Order A_COFFEE_ORDER = new Order(List.of(A_COFFEE, ANOTHER_COFFEE));
 
     private BillResponseAssembler billResponseAssembler;
 
@@ -33,7 +41,7 @@ public class BillResponseAssemblerTest {
 
         BillResponse actualBillResponse = billResponseAssembler.toBillResponse(billDTO);
 
-        assertEquals(actualBillResponse.orders(), A_COFFEE_ORDER.items().stream().map(coffee -> coffee.coffeeType().toString()).toList());
+        assertEquals(actualBillResponse.orders(), A_COFFEE_ORDER.items().stream().map(coffee -> coffee.coffeeType().value()).toList());
     }
 
     @Test

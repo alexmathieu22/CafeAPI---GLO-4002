@@ -16,12 +16,14 @@ import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
 import ca.ulaval.glo4002.cafe.application.customer.CustomerService;
 import ca.ulaval.glo4002.cafe.application.inventory.InventoryService;
 import ca.ulaval.glo4002.cafe.application.layout.LayoutService;
+import ca.ulaval.glo4002.cafe.application.menu.MenuService;
 import ca.ulaval.glo4002.cafe.application.operation.OperationService;
 import ca.ulaval.glo4002.cafe.application.reservation.ReservationService;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerFactory;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeFactory;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationFactory;
 import ca.ulaval.glo4002.cafe.infrastructure.InMemoryCafeRepository;
 
@@ -38,12 +40,13 @@ public class ProductionApplicationContext implements ApplicationContext {
         InventoryService inventoryService = new InventoryService(cafeRepository);
         LayoutService layoutService = new LayoutService(cafeRepository);
         OperationService operationService = new OperationService(cafeRepository);
+        MenuService menuService = new MenuService(cafeRepository, new CoffeeFactory());
 
         initializeCafe(cafeFactory, cafeRepository);
 
         return new ResourceConfig().packages("ca.ulaval.glo4002.cafe").property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true)
             .register(new ConfigurationResource(configurationService))
-            .register(new CustomerResource(customersService))
+            .register(new CustomerResource(customersService, menuService))
             .register(new InventoryResource(inventoryService))
             .register(new LayoutResource(layoutService))
             .register(new OperationResource(operationService, customersService))

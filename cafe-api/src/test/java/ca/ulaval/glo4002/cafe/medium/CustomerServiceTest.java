@@ -118,7 +118,7 @@ public class CustomerServiceTest {
     @Test
     public void givenSavedBill_whenGettingCustomerBill_shouldReturnValidBillDTO() {
         BillDTO expectedBillDTO = new BillDTO(new LinkedList<>(CUSTOMER_ORDER_PARAMS.order().items()), new Amount(0),
-            new Amount(2.25f), new Amount(0), new Amount(2.25f));
+            new Amount(2.95f), new Amount(0), new Amount(2.95f));
         customerService.checkIn(CHECK_IN_CUSTOMER_PARAMS);
         inventoryService.addIngredientsToInventory(INGREDIENT_PARAMS);
         customerService.placeOrder(CUSTOMER_ORDER_PARAMS);

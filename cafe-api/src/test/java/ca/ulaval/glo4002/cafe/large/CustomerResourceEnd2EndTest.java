@@ -12,16 +12,20 @@ import ca.ulaval.glo4002.cafe.api.customer.request.OrderRequest;
 import ca.ulaval.glo4002.cafe.api.customer.response.BillResponse;
 import ca.ulaval.glo4002.cafe.api.customer.response.CustomerResponse;
 import ca.ulaval.glo4002.cafe.api.customer.response.OrdersResponse;
-import ca.ulaval.glo4002.cafe.api.inventory.request.InventoryRequest;
 import ca.ulaval.glo4002.cafe.api.operation.request.CheckInRequest;
 import ca.ulaval.glo4002.cafe.api.operation.request.CheckOutRequest;
+import ca.ulaval.glo4002.cafe.api.request.IngredientsRequest;
 import ca.ulaval.glo4002.cafe.api.reservation.request.ReservationRequest;
+import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
+import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
+import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
 import ca.ulaval.glo4002.cafe.fixture.request.CheckInRequestFixture;
-import ca.ulaval.glo4002.cafe.fixture.request.InventoryRequestFixture;
+import ca.ulaval.glo4002.cafe.fixture.request.IngredientsRequestFixture;
 import ca.ulaval.glo4002.cafe.fixture.request.ReservationRequestFixture;
 
 import static io.restassured.RestAssured.given;
@@ -35,14 +39,17 @@ public class CustomerResourceEnd2EndTest {
     private static final String CUSTOMER_NAME = "Keanu Reeves";
     private static final String GROUP_NAME = "Rise Against the Machine";
     private static final int FIRST_SEAT_NUMBER = 1;
-    private static final Order ORDERS = new Order(
-        List.of(new Coffee(CoffeeType.Espresso), new Coffee(CoffeeType.Espresso), new Coffee(CoffeeType.Latte), new Coffee(CoffeeType.Americano)));
+    private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
+        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+    private static final Coffee ANOTHER_COFFEE = new Coffee(new CoffeeType("Americano"), new Amount(2.25f),
+        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Water, new Quantity(50)))));
+    private static final Order ORDERS = new Order(List.of(A_COFFEE, ANOTHER_COFFEE));
     private static final String A_VALID_COFFEE = "Latte";
     private static final String ANOTHER_VALID_COFFEE = "Americano";
-    private static final Amount SUBTOTAL = new Amount(11.1f);
+    private static final Amount SUBTOTAL = new Amount(5.2f);
     private static final Amount TAXES = new Amount(0f);
     private static final Amount TIP_RATE = new Amount(0.0f);
-    private static final Amount TOTAL = new Amount(11.1f);
+    private static final Amount TOTAL = new Amount(5.2f);
     private static final int ENOUGH_STOCK = 10000;
 
     private TestServer server;
@@ -150,7 +157,7 @@ public class CustomerResourceEnd2EndTest {
         Response response = when().get(BASE_URL + "/customers/" + CUSTOMER_ID + "/bill");
         BillResponse actualBody = response.getBody().as(BillResponse.class);
 
-        assertEquals(ORDERS.items().stream().map(coffee -> coffee.coffeeType().toString()).toList(), actualBody.orders());
+        assertEquals(ORDERS.items().stream().map(coffee -> coffee.coffeeType().value()).toList(), actualBody.orders());
         assertEquals(SUBTOTAL.getRoundedValue(), actualBody.subtotal());
         assertEquals(TAXES.getRoundedValue(), actualBody.taxes());
         assertEquals(TIP_RATE.getRoundedValue(), actualBody.tip());
@@ -200,7 +207,7 @@ public class CustomerResourceEnd2EndTest {
     private void givenCheckedOutCustomer() {
         givenCheckInCustomer();
         OrderRequest orderRequest = new OrderRequest();
-        orderRequest.orders = ORDERS.items().stream().map(coffee -> coffee.coffeeType().toString()).toList();
+        orderRequest.orders = ORDERS.items().stream().map(coffee -> coffee.coffeeType().value()).toList();
         given().contentType("application/json").body(orderRequest).put(BASE_URL + "/customers/" + CUSTOMER_ID + "/orders");
         CheckOutRequest checkOutRequest = new CheckOutRequest();
         checkOutRequest.customer_id = CUSTOMER_ID;
@@ -227,8 +234,8 @@ public class CustomerResourceEnd2EndTest {
     }
 
     private void fullInventory() {
-        InventoryRequest inventoryRequest =
-            new InventoryRequestFixture().withChocolate(ENOUGH_STOCK).withEspresso(ENOUGH_STOCK).withMilk(ENOUGH_STOCK).withWater(ENOUGH_STOCK).build();
-        given().contentType("application/json").body(inventoryRequest).put(BASE_URL + "/inventory");
+        IngredientsRequest ingredientsRequest =
+            new IngredientsRequestFixture().withChocolate(ENOUGH_STOCK).withEspresso(ENOUGH_STOCK).withMilk(ENOUGH_STOCK).withWater(ENOUGH_STOCK).build();
+        given().contentType("application/json").body(ingredientsRequest).put(BASE_URL + "/inventory");
     }
 }
