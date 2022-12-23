@@ -34,7 +34,7 @@ import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeFactory;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationFactory;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
 import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
-import ca.ulaval.glo4002.cafe.domain.taxing.Location;
+import ca.ulaval.glo4002.cafe.domain.taxing.LocationTax;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
 import ca.ulaval.glo4002.cafe.infrastructure.InMemoryCafeRepository;
 
@@ -45,7 +45,7 @@ public class ProductionApplicationContext implements ApplicationContext {
         List.of(new CubeName("Wanda"), new CubeName("Tinker Bell"), new CubeName("Bloom"), new CubeName("Merryweather"));
     private static final ReservationType RESERVATION_STRATEGY_TYPE = ReservationType.Default;
     private static final TipRate GROUP_TIP_RATE = new TipRate(0);
-    private static final Location LOCATION = new Location(CountryTax.None, Optional.empty(), Optional.empty());
+    private static final LocationTax LOCATION_TAX = new LocationTax(CountryTax.None, Optional.empty(), Optional.empty());
     private static final int PORT = 8181;
 
     public ResourceConfig initializeResourceConfig() {
@@ -80,7 +80,7 @@ public class ProductionApplicationContext implements ApplicationContext {
     }
 
     private void initializeCafe(CafeFactory cafeFactory, CafeRepository cafeRepository) {
-        Cafe cafe = cafeFactory.createCafe(CUBE_SIZE, CAFE_NAME, RESERVATION_STRATEGY_TYPE, LOCATION, GROUP_TIP_RATE, CUBE_NAMES);
+        Cafe cafe = cafeFactory.createCafe(CUBE_SIZE, CAFE_NAME, RESERVATION_STRATEGY_TYPE, LOCATION_TAX, GROUP_TIP_RATE, CUBE_NAMES);
         cafeRepository.saveOrUpdate(cafe);
     }
 }

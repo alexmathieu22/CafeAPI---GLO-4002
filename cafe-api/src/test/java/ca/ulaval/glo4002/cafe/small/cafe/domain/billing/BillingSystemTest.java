@@ -13,7 +13,7 @@ import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.ordering.OrderingSystem;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
-import ca.ulaval.glo4002.cafe.domain.taxing.Location;
+import ca.ulaval.glo4002.cafe.domain.taxing.LocationTax;
 import ca.ulaval.glo4002.cafe.domain.taxing.Tax;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 import ca.ulaval.glo4002.cafe.fixture.OrderFixture;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 public class BillingSystemTest {
     private static final CustomerId A_CUSTOMER_ID = new CustomerId("customer-id");
-    private static final Location A_LOCATION = new Location(CountryTax.None, Optional.empty(), Optional.empty());
+    private static final LocationTax A_LOCATION_TAX = new LocationTax(CountryTax.None, Optional.empty(), Optional.empty());
     private static final Tax A_TAX_RATE = new Tax(0);
     private static final TipRate A_TIP_RATE = new TipRate(0);
     private static final boolean IS_IN_GROUP = false;
@@ -54,14 +54,14 @@ public class BillingSystemTest {
         when(orderingSystem.getOrderByCustomerId(any())).thenReturn(AN_ORDER);
         when(billFactory.createBill(AN_ORDER, A_TAX_RATE, A_TIP_RATE, IS_IN_GROUP)).thenReturn(A_BILL);
 
-        billingSystem.createBill(A_CUSTOMER_ID, orderingSystem, A_LOCATION, A_TIP_RATE, IS_IN_GROUP);
+        billingSystem.createBill(A_CUSTOMER_ID, orderingSystem, A_LOCATION_TAX, A_TIP_RATE, IS_IN_GROUP);
 
         assertEquals(A_BILL, billingSystem.getBillByCustomerId(A_CUSTOMER_ID));
     }
 
     @Test
     public void givenNonEmptyBillingSystem_whenClearing_shouldClear() {
-        billingSystem.createBill(A_CUSTOMER_ID, orderingSystem, A_LOCATION, A_TIP_RATE, IS_IN_GROUP);
+        billingSystem.createBill(A_CUSTOMER_ID, orderingSystem, A_LOCATION_TAX, A_TIP_RATE, IS_IN_GROUP);
 
         billingSystem.clear();
 
@@ -70,7 +70,7 @@ public class BillingSystemTest {
 
     @Test
     public void givenCustomerBill_whenHasBillForCustomerId_shouldReturnTrue() {
-        billingSystem.createBill(A_CUSTOMER_ID, orderingSystem, A_LOCATION, A_TIP_RATE, IS_IN_GROUP);
+        billingSystem.createBill(A_CUSTOMER_ID, orderingSystem, A_LOCATION_TAX, A_TIP_RATE, IS_IN_GROUP);
 
         boolean hasBill = billingSystem.hasBillForCustomerId(A_CUSTOMER_ID);
 

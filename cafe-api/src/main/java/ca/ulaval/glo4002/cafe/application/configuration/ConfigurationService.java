@@ -18,7 +18,7 @@ public class ConfigurationService {
             configurationParams.cubeSize(),
             configurationParams.cafeName(),
             configurationParams.reservationType(),
-            configurationParams.location(),
+            configurationParams.locationTax(),
             configurationParams.groupTipRate());
         cafe.updateConfiguration(cafeConfiguration);
         cafe.close();

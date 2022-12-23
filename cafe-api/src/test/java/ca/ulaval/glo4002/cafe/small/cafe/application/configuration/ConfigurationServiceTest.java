@@ -52,7 +52,7 @@ public class ConfigurationServiceTest {
         ArgumentCaptor<CafeConfiguration> argument = ArgumentCaptor.forClass(CafeConfiguration.class);
         CafeConfiguration expectedConfiguration =
             new CafeConfiguration(A_CONFIGURATION_PARAMS.cubeSize(), A_CONFIGURATION_PARAMS.cafeName(), A_CONFIGURATION_PARAMS.reservationType(),
-                A_CONFIGURATION_PARAMS.location(), A_CONFIGURATION_PARAMS.groupTipRate());
+                A_CONFIGURATION_PARAMS.locationTax(), A_CONFIGURATION_PARAMS.groupTipRate());
 
         configurationService.updateConfiguration(A_CONFIGURATION_PARAMS);
 

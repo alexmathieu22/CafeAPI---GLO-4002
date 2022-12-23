@@ -36,7 +36,7 @@ import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 import ca.ulaval.glo4002.cafe.domain.reservation.Reservation;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationStrategyFactory;
 import ca.ulaval.glo4002.cafe.domain.reservation.strategies.ReservationStrategy;
-import ca.ulaval.glo4002.cafe.domain.taxing.Location;
+import ca.ulaval.glo4002.cafe.domain.taxing.LocationTax;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
@@ -52,7 +52,7 @@ public class Cafe {
     private TipRate groupTipRate;
     private CubeSize cubeSize;
     private CafeName cafeName;
-    private Location location;
+    private LocationTax locationTax;
     private ReservationStrategy reservationStrategy;
 
     public Cafe(List<CubeName> cubeNames, CafeConfiguration cafeConfiguration) {
@@ -102,7 +102,7 @@ public class Cafe {
         this.cafeName = cafeConfiguration.cafeName();
         this.reservationStrategy = reservationStrategyFactory.createReservationStrategy(cafeConfiguration.reservationType());
         this.groupTipRate = cafeConfiguration.groupTipRate();
-        this.location = cafeConfiguration.location();
+        this.locationTax = cafeConfiguration.locationTax();
     }
 
     public CafeName getName() {
@@ -166,7 +166,7 @@ public class Cafe {
         Seat seat = this.layout.getSeatByCustomerId(customerId);
         boolean isCustomerInGroup = seat.isReservedForGroup();
         this.layout.checkout(customerId);
-        billingSystem.createBill(customerId, orderingSystem, location, groupTipRate, isCustomerInGroup);
+        billingSystem.createBill(customerId, orderingSystem, locationTax, groupTipRate, isCustomerInGroup);
     }
 
     public void addCoffeeToMenu(Coffee coffee) {

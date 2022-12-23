@@ -9,7 +9,7 @@ import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
 import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
-import ca.ulaval.glo4002.cafe.domain.taxing.Location;
+import ca.ulaval.glo4002.cafe.domain.taxing.LocationTax;
 import ca.ulaval.glo4002.cafe.domain.taxing.ProvinceTax;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
@@ -21,7 +21,7 @@ public class CafeFixture {
     private CafeName name = new CafeName("Les 4-Fées");
     private CubeSize cubeSize = new CubeSize(4);
     private TipRate groupTipRate = new TipRate(0.05f);
-    private Location location = new Location(CountryTax.CA, Optional.of(ProvinceTax.AB), Optional.empty());
+    private LocationTax locationTax = new LocationTax(CountryTax.CA, Optional.of(ProvinceTax.AB), Optional.empty());
 
     public CafeFixture withName(CafeName name) {
         this.name = name;
@@ -38,8 +38,8 @@ public class CafeFixture {
         return this;
     }
 
-    public CafeFixture withLocation(Location location) {
-        this.location = location;
+    public CafeFixture withLocation(LocationTax locationTax) {
+        this.locationTax = locationTax;
         return this;
     }
 
@@ -49,7 +49,7 @@ public class CafeFixture {
     }
 
     public Cafe build() {
-        CafeConfiguration cafeConfiguration = new CafeConfiguration(cubeSize, name, RESERVATION_STRATEGY_TYPE, location, groupTipRate);
+        CafeConfiguration cafeConfiguration = new CafeConfiguration(cubeSize, name, RESERVATION_STRATEGY_TYPE, locationTax, groupTipRate);
         return new Cafe(cubeNames, cafeConfiguration);
     }
 }

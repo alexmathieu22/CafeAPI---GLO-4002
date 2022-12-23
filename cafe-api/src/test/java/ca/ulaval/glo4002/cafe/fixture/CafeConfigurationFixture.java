@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.cafe.domain.billing.TipRate;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
 import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
-import ca.ulaval.glo4002.cafe.domain.taxing.Location;
+import ca.ulaval.glo4002.cafe.domain.taxing.LocationTax;
 import ca.ulaval.glo4002.cafe.domain.taxing.ProvinceTax;
 import ca.ulaval.glo4002.cafe.domain.taxing.StateTax;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
@@ -57,6 +57,6 @@ public class CafeConfigurationFixture {
     }
 
     public CafeConfiguration build() {
-        return new CafeConfiguration(cubeSize, name, reservationType, new Location(countryTax, province, state), groupTipRate);
+        return new CafeConfiguration(cubeSize, name, reservationType, new LocationTax(countryTax, province, state), groupTipRate);
     }
 }
