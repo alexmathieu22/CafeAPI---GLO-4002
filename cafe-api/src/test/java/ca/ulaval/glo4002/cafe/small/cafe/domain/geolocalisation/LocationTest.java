@@ -4,12 +4,12 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidConfigurationCountryException;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Province;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.State;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,32 +62,27 @@ public class LocationTest {
 
     @Test
     public void givenAnInvalidCountry_whenCreatingLocationFromDetails_shouldThrowInvalidConfigurationCountryException() {
-        assertThrows(InvalidConfigurationCountryException.class,
-            () -> Location.fromDetails(INVALID_COUNTRY, A_VALID_PROVINCE, A_VALID_STATE));
+        assertThrows(InvalidConfigurationCountryException.class, () -> Location.fromDetails(INVALID_COUNTRY, A_VALID_PROVINCE, A_VALID_STATE));
     }
 
     @Test
     public void givenCACountryAndInvalidProvince_whenCreatingLocationFromDetails_shouldThrowInvalidConfigurationCountryException() {
-        assertThrows(InvalidConfigurationCountryException.class,
-            () -> Location.fromDetails("CA", INVALID_PROVINCE, A_VALID_STATE));
+        assertThrows(InvalidConfigurationCountryException.class, () -> Location.fromDetails("CA", INVALID_PROVINCE, A_VALID_STATE));
     }
 
     @Test
     public void givenUSCountryAndInvalidState_whenCreatingLocationFromDetails_shouldThrowInvalidConfigurationCountryException() {
-        assertThrows(InvalidConfigurationCountryException.class,
-            () -> Location.fromDetails("US", A_VALID_PROVINCE, INVALID_STATE));
+        assertThrows(InvalidConfigurationCountryException.class, () -> Location.fromDetails("US", A_VALID_PROVINCE, INVALID_STATE));
     }
 
     @Test
     public void givenCACountryAndInvalidState_whenCreatingLocationFromDetails_shouldNotThrowInvalidConfigurationRequestException() {
-        assertDoesNotThrow(
-            () -> Location.fromDetails("CA", A_VALID_PROVINCE, INVALID_STATE));
+        assertDoesNotThrow(() -> Location.fromDetails("CA", A_VALID_PROVINCE, INVALID_STATE));
     }
 
     @Test
     public void givenUSCountryAndInvalidProvince_whenCreatingLocationFromDetails_shouldNotThrowInvalidConfigurationRequestException() {
-        assertDoesNotThrow(
-            () -> Location.fromDetails("US", INVALID_PROVINCE, A_VALID_STATE));
+        assertDoesNotThrow(() -> Location.fromDetails("US", INVALID_PROVINCE, A_VALID_STATE));
     }
 
     @Test
