@@ -5,11 +5,11 @@ import java.util.Map;
 
 import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
 import ca.ulaval.glo4002.cafe.domain.billing.bill.BillFactory;
-import ca.ulaval.glo4002.cafe.domain.billing.bill.taxing.Tax;
-import ca.ulaval.glo4002.cafe.domain.billing.bill.taxing.strategy.TaxingCanada;
-import ca.ulaval.glo4002.cafe.domain.billing.bill.taxing.strategy.TaxingNone;
-import ca.ulaval.glo4002.cafe.domain.billing.bill.taxing.strategy.TaxingStrategy;
-import ca.ulaval.glo4002.cafe.domain.billing.bill.taxing.strategy.TaxingUnitedStates;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.strategy.TaxingCanada;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.strategy.TaxingNone;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.strategy.TaxingStrategy;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.strategy.TaxingUnitedStates;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
@@ -27,8 +27,7 @@ public class BillingSystem {
     }
 
     public void createBill(CustomerId customerId, OrderingSystem orderingSystem, Location location, TipRate groupTipRate, boolean isInGroup) {
-        Tax taxRate = TAXING_STRATEGIES.get(location.country()).getTaxRate(location);
-        Bill bill = billFactory.createBill(orderingSystem.getOrderByCustomerId(customerId), taxRate, groupTipRate, isInGroup);
+        Bill bill = billFactory.createBill(orderingSystem.getOrderByCustomerId(customerId), location.getTaxPercentage(), groupTipRate, isInGroup);
         bills.put(customerId, bill);
     }
 

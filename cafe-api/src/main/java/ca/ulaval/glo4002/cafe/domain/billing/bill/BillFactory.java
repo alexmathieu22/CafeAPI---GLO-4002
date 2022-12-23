@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.cafe.domain.billing.bill;
 
-import ca.ulaval.glo4002.cafe.domain.billing.bill.taxing.Tax;
+import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
