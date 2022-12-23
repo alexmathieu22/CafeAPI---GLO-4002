@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.cafe.small.cafe.api.customer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,6 @@ import ca.ulaval.glo4002.cafe.application.customer.dto.CustomerDTO;
 import ca.ulaval.glo4002.cafe.application.customer.dto.OrderDTO;
 import ca.ulaval.glo4002.cafe.application.customer.parameter.CustomerOrderParams;
 import ca.ulaval.glo4002.cafe.application.menu.MenuService;
-import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.SeatNumber;
@@ -45,7 +45,7 @@ public class CustomerResourceTest {
     private static final BillDTO A_BILL_DTO = new BillDTO(ORDER.items(), AMOUNT, AMOUNT, AMOUNT, AMOUNT);
     private static final OrderDTO A_ORDER_DTO = new OrderDTO(new ArrayList<>());
     private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
-        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+        new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Milk, new Quantity(50))));
     private static final List<Coffee> LIST_OF_A_COFFEE = List.of(A_COFFEE);
     private static final List<CoffeeType> LIST_OF_A_COFFEE_TYPE = List.of(new CoffeeType("Latte"));
     private static final List<String> LIST_OF_A_COFFEE_STRING = List.of("Latte");

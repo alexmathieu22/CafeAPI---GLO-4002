@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.cafe.small.cafe.application.customer;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,6 @@ import ca.ulaval.glo4002.cafe.application.customer.parameter.CustomerOrderParams
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
 import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
-import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.Seat;
@@ -45,9 +45,9 @@ public class CustomerServiceTest {
     private static final Customer CUSTOMER = new CustomerFixture().withCustomerId(CUSTOMER_ID).withCustomerName(CUSTOMER_NAME).build();
     private static final Seat SEAT_WITH_CUSTOMER = new SeatFixture().withSeatNumber(new SeatNumber(1)).withCustomer(CUSTOMER).build();
     private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
-        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+        new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Milk, new Quantity(50))));
     private static final Coffee ANOTHER_COFFEE = new Coffee(new CoffeeType("Americano"), new Amount(2.25f),
-        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Water, new Quantity(50)))));
+        new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Water, new Quantity(50))));
     private static final Order A_ORDER = new OrderFixture().build();
     private static final Bill A_VALID_BILL = new BillFixture().build();
 

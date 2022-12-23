@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.cafe.small.cafe.application.menu;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,6 @@ import ca.ulaval.glo4002.cafe.application.menu.MenuService;
 import ca.ulaval.glo4002.cafe.application.menu.parameter.NewCoffeeParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
-import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 public class MenuServiceTest {
     private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
-        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+        new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Milk, new Quantity(50))));
     private static final List<CoffeeType> A_COFFEE_TYPE_LIST = List.of(A_COFFEE.coffeeType());
     private static final NewCoffeeParams A_NEW_COFFEE_PARAMS = NewCoffeeParams.from("Latte", 2.95f, 0, 50, 0, 50);
 

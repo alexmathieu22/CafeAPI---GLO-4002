@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.cafe.small.cafe.domain;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,6 @@ import ca.ulaval.glo4002.cafe.domain.exception.NoReservationsFoundException;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Province;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.State;
-import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.Layout;
@@ -62,7 +62,7 @@ public class CafeTest {
         new ReservationFixture().withGroupName(new GroupName("Another")).withGroupSize(new GroupSize(2)).build();
     private static final Order AN_ORDER = new OrderFixture().build();
     private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
-        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+        new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Milk, new Quantity(50))));
     private static final Order ANOTHER_ORDER = new OrderFixture().withItems(List.of(A_COFFEE)).build();
 
     @Test
@@ -378,7 +378,7 @@ public class CafeTest {
 
         cafe.placeOrder(aCustomer.getId(), AN_ORDER);
 
-        assertTrue(cafe.getInventory().getIngredients().values().stream().allMatch(ingredient -> ingredient.quantity().value() == 0));
+        assertTrue(cafe.getInventory().getIngredients().values().stream().allMatch(quantity -> quantity.value() == 0));
     }
 
     @Test
@@ -402,7 +402,7 @@ public class CafeTest {
         } catch (InsufficientIngredientsException ignored) {
         }
 
-        assertTrue(cafe.getInventory().getIngredients().values().containsAll(AN_ORDER.ingredientsNeeded()));
+        assertEquals(AN_ORDER.ingredientsNeeded(), cafe.getInventory().getIngredients());
     }
 
     @Test
@@ -623,11 +623,11 @@ public class CafeTest {
     @Test
     public void whenAddingIngredients_shouldBeAddedToInventory() {
         Cafe cafe = new Cafe(SOME_CUBE_NAMES, new CafeConfigurationFixture().build());
-        Ingredient anIngredient = new Ingredient(IngredientType.Chocolate, new Quantity(10));
 
-        cafe.addIngredientsToInventory(List.of(anIngredient));
+        cafe.addIngredientsToInventory(Map.of(IngredientType.Chocolate, new Quantity(10)));
 
-        assertTrue(cafe.getInventory().getIngredients().containsValue(anIngredient));
+        assertTrue(cafe.getInventory().getIngredients().containsKey(IngredientType.Chocolate));
+        assertEquals(new Quantity(10), cafe.getInventory().getIngredients().get(IngredientType.Chocolate));
     }
 
     @Test
@@ -706,8 +706,8 @@ public class CafeTest {
     private Cafe cafeWithEnoughInventory() {
         Cafe cafe = new Cafe(SOME_CUBE_NAMES, new CafeConfigurationFixture().build());
         cafe.addIngredientsToInventory(
-            List.of(new Ingredient(IngredientType.Milk, new Quantity(1000)), new Ingredient(IngredientType.Chocolate, new Quantity(1000)),
-                new Ingredient(IngredientType.Water, new Quantity(1000)), new Ingredient(IngredientType.Espresso, new Quantity(1000))));
+            Map.of(IngredientType.Milk, new Quantity(1000), IngredientType.Chocolate, new Quantity(1000), IngredientType.Water, new Quantity(1000),
+                IngredientType.Espresso, new Quantity(1000)));
         return cafe;
     }
 }

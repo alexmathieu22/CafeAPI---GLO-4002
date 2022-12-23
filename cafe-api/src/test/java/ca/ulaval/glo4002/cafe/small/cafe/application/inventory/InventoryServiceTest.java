@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.cafe.small.cafe.application.inventory;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +10,8 @@ import ca.ulaval.glo4002.cafe.application.inventory.InventoryService;
 import ca.ulaval.glo4002.cafe.application.parameter.IngredientsParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
+import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
+import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.fixture.CafeFixture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,8 +47,12 @@ public class InventoryServiceTest {
 
         inventoryService.addIngredientsToInventory(AN_INGREDIENTS_PARAMS);
 
-        verify(mockCafe).addIngredientsToInventory(
-            List.of(AN_INGREDIENTS_PARAMS.chocolate(), AN_INGREDIENTS_PARAMS.milk(), AN_INGREDIENTS_PARAMS.water(), AN_INGREDIENTS_PARAMS.espresso()));
+        HashMap<IngredientType, Quantity> ingredients = new HashMap<>();
+        ingredients.put(IngredientType.Chocolate, AN_INGREDIENTS_PARAMS.ingredients().get(IngredientType.Chocolate));
+        ingredients.put(IngredientType.Milk, AN_INGREDIENTS_PARAMS.ingredients().get(IngredientType.Milk));
+        ingredients.put(IngredientType.Water, AN_INGREDIENTS_PARAMS.ingredients().get(IngredientType.Water));
+        ingredients.put(IngredientType.Espresso, AN_INGREDIENTS_PARAMS.ingredients().get(IngredientType.Espresso));
+        verify(mockCafe).addIngredientsToInventory(ingredients);
     }
 
     @Test

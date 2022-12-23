@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.cafe.domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import ca.ulaval.glo4002.cafe.domain.billing.BillingSystem;
@@ -14,7 +15,6 @@ import ca.ulaval.glo4002.cafe.domain.exception.CustomerNotFoundException;
 import ca.ulaval.glo4002.cafe.domain.exception.DuplicateGroupNameException;
 import ca.ulaval.glo4002.cafe.domain.exception.NoReservationsFoundException;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
-import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Inventory;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
@@ -61,33 +61,33 @@ public class Cafe {
         this.inventory = new Inventory();
         CoffeeFactory coffeeFactory = new CoffeeFactory();
         this.menu = new Menu(new ArrayList<>(Arrays.asList(
-            coffeeFactory.createCoffee(new CoffeeType("Americano"), new Amount(2.25f), new Recipe(List.of(
-                new Ingredient(IngredientType.Espresso, new Quantity(50)),
-                new Ingredient(IngredientType.Water, new Quantity(50))))),
-            coffeeFactory.createCoffee(new CoffeeType("Dark Roast"), new Amount(2.10f), new Recipe(List.of(
-                new Ingredient(IngredientType.Espresso, new Quantity(40)),
-                new Ingredient(IngredientType.Water, new Quantity(40)),
-                new Ingredient(IngredientType.Chocolate, new Quantity(10)),
-                new Ingredient(IngredientType.Milk, new Quantity(10))))),
-            coffeeFactory.createCoffee(new CoffeeType("Cappuccino"), new Amount(3.29f), new Recipe(List.of(
-                new Ingredient(IngredientType.Espresso, new Quantity(50)),
-                new Ingredient(IngredientType.Water, new Quantity(40)),
-                new Ingredient(IngredientType.Milk, new Quantity(10))))),
-            coffeeFactory.createCoffee(new CoffeeType("Espresso"), new Amount(2.95f), new Recipe(List.of(
-                new Ingredient(IngredientType.Espresso, new Quantity(60))))),
-            coffeeFactory.createCoffee(new CoffeeType("Flat White"), new Amount(3.75f), new Recipe(List.of(
-                new Ingredient(IngredientType.Espresso, new Quantity(50)),
-                new Ingredient(IngredientType.Milk, new Quantity(50))))),
-            coffeeFactory.createCoffee(new CoffeeType("Latte"), new Amount(2.95f), new Recipe(List.of(
-                new Ingredient(IngredientType.Espresso, new Quantity(50)),
-                new Ingredient(IngredientType.Milk, new Quantity(50))))),
-            coffeeFactory.createCoffee(new CoffeeType("Macchiato"), new Amount(4.75f), new Recipe(List.of(
-                new Ingredient(IngredientType.Espresso, new Quantity(80)),
-                new Ingredient(IngredientType.Milk, new Quantity(20))))),
-            coffeeFactory.createCoffee(new CoffeeType("Mocha"), new Amount(4.15f), new Recipe(List.of(
-                new Ingredient(IngredientType.Espresso, new Quantity(50)),
-                new Ingredient(IngredientType.Milk, new Quantity(40)),
-                new Ingredient(IngredientType.Chocolate, new Quantity(10))))))));
+            coffeeFactory.createCoffee(new CoffeeType("Americano"), new Amount(2.25f), new Recipe(Map.of(
+                IngredientType.Espresso, new Quantity(50),
+                IngredientType.Water, new Quantity(50)))),
+            coffeeFactory.createCoffee(new CoffeeType("Dark Roast"), new Amount(2.10f), new Recipe(Map.of(
+                IngredientType.Espresso, new Quantity(40),
+                IngredientType.Water, new Quantity(40),
+                IngredientType.Chocolate, new Quantity(10),
+                IngredientType.Milk, new Quantity(10)))),
+            coffeeFactory.createCoffee(new CoffeeType("Cappuccino"), new Amount(3.29f), new Recipe(Map.of(
+                IngredientType.Espresso, new Quantity(50),
+                IngredientType.Water, new Quantity(40),
+                IngredientType.Milk, new Quantity(10)))),
+            coffeeFactory.createCoffee(new CoffeeType("Espresso"), new Amount(2.95f), new Recipe(Map.of(
+                IngredientType.Espresso, new Quantity(60)))),
+            coffeeFactory.createCoffee(new CoffeeType("Flat White"), new Amount(3.75f), new Recipe(Map.of(
+                IngredientType.Espresso, new Quantity(50),
+                IngredientType.Milk, new Quantity(50)))),
+            coffeeFactory.createCoffee(new CoffeeType("Latte"), new Amount(2.95f), new Recipe(Map.of(
+                IngredientType.Espresso, new Quantity(50),
+                IngredientType.Milk, new Quantity(50)))),
+            coffeeFactory.createCoffee(new CoffeeType("Macchiato"), new Amount(4.75f), new Recipe(Map.of(
+                IngredientType.Espresso, new Quantity(80),
+                IngredientType.Milk, new Quantity(20)))),
+            coffeeFactory.createCoffee(new CoffeeType("Mocha"), new Amount(4.15f), new Recipe(Map.of(
+                IngredientType.Espresso, new Quantity(50),
+                IngredientType.Milk, new Quantity(40),
+                IngredientType.Chocolate, new Quantity(10)))))));
         this.orderingSystem = new OrderingSystem();
         this.billingSystem = new BillingSystem(new BillFactory());
 
@@ -175,7 +175,7 @@ public class Cafe {
         orderingSystem.placeOrder(customerId, order, this.inventory);
     }
 
-    public void addIngredientsToInventory(List<Ingredient> ingredients) {
+    public void addIngredientsToInventory(Map<IngredientType, Quantity> ingredients) {
         inventory.add(ingredients);
     }
 

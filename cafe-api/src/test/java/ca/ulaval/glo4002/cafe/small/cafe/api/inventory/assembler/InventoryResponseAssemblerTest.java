@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.cafe.small.cafe.api.inventory.assembler;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.cafe.api.inventory.assembler.InventoryResponseAssembler;
 import ca.ulaval.glo4002.cafe.api.inventory.response.InventoryResponse;
 import ca.ulaval.glo4002.cafe.application.dto.InventoryDTO;
-import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Inventory;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
@@ -37,7 +35,9 @@ public class InventoryResponseAssemblerTest {
     @Test
     public void givenInventory_whenAssemblingInventoryResponse_shouldReturnCorrectResponse() {
         Inventory inventory = new Inventory();
-        inventory.add(List.of(new Ingredient(IngredientType.Chocolate, new Quantity(1))));
+        HashMap<IngredientType, Quantity> ingredients = new HashMap<>();
+        ingredients.put(IngredientType.Chocolate, new Quantity(1));
+        inventory.add(ingredients);
         InventoryDTO inventoryDTO = InventoryDTO.fromInventory(inventory);
 
         InventoryResponse actualResponse = inventoryResponseAssembler.toInventoryResponse(inventoryDTO);

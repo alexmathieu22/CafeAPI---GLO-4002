@@ -2,12 +2,12 @@ package ca.ulaval.glo4002.cafe.small.cafe.domain.menu;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.domain.exception.DuplicateCoffeeNameException;
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidMenuOrderException;
-import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MenuTest {
     private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
-        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+        new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Milk, new Quantity(50))));
 
     private final List<Coffee> emptyListOfCoffees = new ArrayList<>();
     private final List<Coffee> listWithOneCoffee = new ArrayList<>(List.of(A_COFFEE));

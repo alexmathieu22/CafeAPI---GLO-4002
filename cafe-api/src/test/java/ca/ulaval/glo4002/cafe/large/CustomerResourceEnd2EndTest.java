@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.cafe.large;
 
 import java.util.List;
+import java.util.Map;
 
 import io.restassured.response.Response;
 
@@ -16,7 +17,6 @@ import ca.ulaval.glo4002.cafe.api.operation.request.CheckInRequest;
 import ca.ulaval.glo4002.cafe.api.operation.request.CheckOutRequest;
 import ca.ulaval.glo4002.cafe.api.request.IngredientsRequest;
 import ca.ulaval.glo4002.cafe.api.reservation.request.ReservationRequest;
-import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
@@ -40,9 +40,9 @@ public class CustomerResourceEnd2EndTest {
     private static final String GROUP_NAME = "Rise Against the Machine";
     private static final int FIRST_SEAT_NUMBER = 1;
     private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
-        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Milk, new Quantity(50)))));
+        new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Milk, new Quantity(50))));
     private static final Coffee ANOTHER_COFFEE = new Coffee(new CoffeeType("Americano"), new Amount(2.25f),
-        new Recipe(List.of(new Ingredient(IngredientType.Espresso, new Quantity(50)), new Ingredient(IngredientType.Water, new Quantity(50)))));
+        new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Water, new Quantity(50))));
     private static final Order ORDERS = new Order(List.of(A_COFFEE, ANOTHER_COFFEE));
     private static final String A_VALID_COFFEE = "Latte";
     private static final String ANOTHER_VALID_COFFEE = "Americano";

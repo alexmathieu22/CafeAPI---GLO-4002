@@ -38,9 +38,9 @@ public class InventoryServiceTest {
         inventoryService.addIngredientsToInventory(INGREDIENT_PARAMS);
 
         InventoryDTO inventory = inventoryService.getInventory();
-        assertEquals(INGREDIENT_PARAMS.chocolate().quantity(), inventory.ingredients().get(IngredientType.Chocolate).quantity());
-        assertEquals(INGREDIENT_PARAMS.milk().quantity(), inventory.ingredients().get(IngredientType.Milk).quantity());
-        assertEquals(INGREDIENT_PARAMS.water().quantity(), inventory.ingredients().get(IngredientType.Water).quantity());
-        assertEquals(INGREDIENT_PARAMS.espresso().quantity(), inventory.ingredients().get(IngredientType.Espresso).quantity());
+        assertEquals(INGREDIENT_PARAMS.ingredients().get(IngredientType.Chocolate), inventory.ingredients().get(IngredientType.Chocolate));
+        assertEquals(INGREDIENT_PARAMS.ingredients().get(IngredientType.Milk), inventory.ingredients().get(IngredientType.Milk));
+        assertEquals(INGREDIENT_PARAMS.ingredients().get(IngredientType.Water), inventory.ingredients().get(IngredientType.Water));
+        assertEquals(INGREDIENT_PARAMS.ingredients().get(IngredientType.Espresso), inventory.ingredients().get(IngredientType.Espresso));
     }
 }
