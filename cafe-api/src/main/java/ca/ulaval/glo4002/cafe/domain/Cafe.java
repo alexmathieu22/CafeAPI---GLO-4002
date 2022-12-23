@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.cafe.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +60,7 @@ public class Cafe {
 
         this.inventory = new Inventory();
         CoffeeFactory coffeeFactory = new CoffeeFactory();
-        this.menu = new Menu(List.of(
+        this.menu = new Menu(new ArrayList<>(Arrays.asList(
             coffeeFactory.createCoffee(new CoffeeType("Americano"), new Amount(2.25f), new Recipe(List.of(
                 new Ingredient(IngredientType.Espresso, new Quantity(50)),
                 new Ingredient(IngredientType.Water, new Quantity(50))))),
@@ -86,7 +87,7 @@ public class Cafe {
             coffeeFactory.createCoffee(new CoffeeType("Mocha"), new Amount(4.15f), new Recipe(List.of(
                 new Ingredient(IngredientType.Espresso, new Quantity(50)),
                 new Ingredient(IngredientType.Milk, new Quantity(40)),
-                new Ingredient(IngredientType.Chocolate, new Quantity(10)))))));
+                new Ingredient(IngredientType.Chocolate, new Quantity(10))))))));
         this.orderingSystem = new OrderingSystem();
         this.billingSystem = new BillingSystem(new BillFactory());
 
