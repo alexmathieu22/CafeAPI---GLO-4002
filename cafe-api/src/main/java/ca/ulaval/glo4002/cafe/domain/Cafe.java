@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.cafe.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,17 +26,15 @@ import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Customer;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.ordering.OrderingSystem;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
-import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeFactory;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
-import ca.ulaval.glo4002.cafe.domain.ordering.order.Menu;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
-import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.menu.Menu;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.menu.MenuFactory;
 import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 import ca.ulaval.glo4002.cafe.domain.reservation.Reservation;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationStrategyFactory;
 import ca.ulaval.glo4002.cafe.domain.reservation.strategies.ReservationStrategy;
 import ca.ulaval.glo4002.cafe.domain.taxing.LocationTax;
-import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
 
@@ -57,43 +54,13 @@ public class Cafe {
 
     public Cafe(List<CubeName> cubeNames, CafeConfiguration cafeConfiguration) {
         reservationStrategyFactory = new ReservationStrategyFactory();
-
         LayoutFactory layoutFactory = new LayoutFactory();
         this.layout = layoutFactory.createLayout(cafeConfiguration.cubeSize(), cubeNames);
-
         this.inventory = new Inventory();
-        CoffeeFactory coffeeFactory = new CoffeeFactory();
-        this.menu = new Menu(new ArrayList<>(Arrays.asList(
-            coffeeFactory.createCoffee(new CoffeeType("Americano"), new Amount(2.25f), new Recipe(Map.of(
-                IngredientType.Espresso, new Quantity(50),
-                IngredientType.Water, new Quantity(50)))),
-            coffeeFactory.createCoffee(new CoffeeType("Dark Roast"), new Amount(2.10f), new Recipe(Map.of(
-                IngredientType.Espresso, new Quantity(40),
-                IngredientType.Water, new Quantity(40),
-                IngredientType.Chocolate, new Quantity(10),
-                IngredientType.Milk, new Quantity(10)))),
-            coffeeFactory.createCoffee(new CoffeeType("Cappuccino"), new Amount(3.29f), new Recipe(Map.of(
-                IngredientType.Espresso, new Quantity(50),
-                IngredientType.Water, new Quantity(40),
-                IngredientType.Milk, new Quantity(10)))),
-            coffeeFactory.createCoffee(new CoffeeType("Espresso"), new Amount(2.95f), new Recipe(Map.of(
-                IngredientType.Espresso, new Quantity(60)))),
-            coffeeFactory.createCoffee(new CoffeeType("Flat White"), new Amount(3.75f), new Recipe(Map.of(
-                IngredientType.Espresso, new Quantity(50),
-                IngredientType.Milk, new Quantity(50)))),
-            coffeeFactory.createCoffee(new CoffeeType("Latte"), new Amount(2.95f), new Recipe(Map.of(
-                IngredientType.Espresso, new Quantity(50),
-                IngredientType.Milk, new Quantity(50)))),
-            coffeeFactory.createCoffee(new CoffeeType("Macchiato"), new Amount(4.75f), new Recipe(Map.of(
-                IngredientType.Espresso, new Quantity(80),
-                IngredientType.Milk, new Quantity(20)))),
-            coffeeFactory.createCoffee(new CoffeeType("Mocha"), new Amount(4.15f), new Recipe(Map.of(
-                IngredientType.Espresso, new Quantity(50),
-                IngredientType.Milk, new Quantity(40),
-                IngredientType.Chocolate, new Quantity(10)))))));
+        MenuFactory menuFactory = new MenuFactory();
+        this.menu = menuFactory.createMenu();
         this.orderingSystem = new OrderingSystem();
         this.billingSystem = new BillingSystem(new BillFactory());
-
         updateConfiguration(cafeConfiguration);
     }
 

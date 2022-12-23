@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.cafe.domain.ordering.order;
+package ca.ulaval.glo4002.cafe.domain.ordering.order.menu;
 
 import java.util.List;
 import java.util.Set;
@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import ca.ulaval.glo4002.cafe.domain.exception.DuplicateCoffeeNameException;
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidMenuOrderException;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 
 public class Menu {
     private final Set<CoffeeType> defaultCoffees;

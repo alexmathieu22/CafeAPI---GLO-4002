@@ -12,8 +12,8 @@ import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
-import ca.ulaval.glo4002.cafe.domain.ordering.order.Menu;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Recipe;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.menu.Menu;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 
 import static org.junit.jupiter.api.Assertions.*;
