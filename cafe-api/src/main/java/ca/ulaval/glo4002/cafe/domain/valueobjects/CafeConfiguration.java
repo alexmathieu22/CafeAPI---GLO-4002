@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.cafe.domain;
+package ca.ulaval.glo4002.cafe.domain.valueobjects;
 
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;

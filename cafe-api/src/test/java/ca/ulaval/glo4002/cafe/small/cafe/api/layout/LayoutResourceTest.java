@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.cafe.api.layout.LayoutResource;
 import ca.ulaval.glo4002.cafe.application.dto.LayoutDTO;
 import ca.ulaval.glo4002.cafe.application.layout.LayoutService;
-import ca.ulaval.glo4002.cafe.domain.CafeName;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
 
 import jakarta.ws.rs.core.Response;
 

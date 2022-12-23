@@ -8,6 +8,9 @@ import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 
 public class CafeFactory {
     private static final CafeName CAFE_NAME = new CafeName("Les 4-Fées");

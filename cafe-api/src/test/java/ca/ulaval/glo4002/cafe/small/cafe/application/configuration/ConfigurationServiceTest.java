@@ -7,8 +7,8 @@ import org.mockito.ArgumentCaptor;
 import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
 import ca.ulaval.glo4002.cafe.application.parameter.ConfigurationParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
-import ca.ulaval.glo4002.cafe.domain.CafeConfiguration;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;

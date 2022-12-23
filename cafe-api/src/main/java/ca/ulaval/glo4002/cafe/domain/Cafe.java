@@ -23,7 +23,6 @@ import ca.ulaval.glo4002.cafe.domain.layout.LayoutFactory;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.Seat;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Amount;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Customer;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.ordering.OrderingSystem;
@@ -37,6 +36,10 @@ import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 import ca.ulaval.glo4002.cafe.domain.reservation.Reservation;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationStrategyFactory;
 import ca.ulaval.glo4002.cafe.domain.reservation.strategies.ReservationStrategy;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 
 public class Cafe {
     private final ReservationStrategyFactory reservationStrategyFactory;

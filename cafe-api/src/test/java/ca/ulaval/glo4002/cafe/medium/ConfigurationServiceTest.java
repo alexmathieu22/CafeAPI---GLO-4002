@@ -7,8 +7,8 @@ import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
 import ca.ulaval.glo4002.cafe.application.parameter.ConfigurationParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeFactory;
-import ca.ulaval.glo4002.cafe.domain.CafeName;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
+import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
 import ca.ulaval.glo4002.cafe.infrastructure.InMemoryCafeRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

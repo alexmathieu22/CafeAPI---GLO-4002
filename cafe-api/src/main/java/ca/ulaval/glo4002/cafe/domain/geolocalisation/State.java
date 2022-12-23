@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.cafe.domain.geolocalisation;
 
+import ca.ulaval.glo4002.cafe.domain.billing.bill.taxing.Tax;
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidConfigurationCountryException;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Tax;
 
 public enum State {
     AL(new Tax(0.04f)),

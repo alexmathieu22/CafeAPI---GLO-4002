@@ -4,12 +4,12 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
+import ca.ulaval.glo4002.cafe.domain.billing.bill.taxing.Tax;
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidConfigurationCountryException;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.Province;
 import ca.ulaval.glo4002.cafe.domain.geolocalisation.State;
-import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Tax;
 
 import static org.junit.jupiter.api.Assertions.*;
 
