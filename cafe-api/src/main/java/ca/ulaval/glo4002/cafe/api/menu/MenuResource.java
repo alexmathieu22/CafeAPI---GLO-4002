@@ -11,7 +11,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/menu")
+@Path("")
 @Produces(MediaType.APPLICATION_JSON)
 public class MenuResource {
     private final MenuService menuService;
@@ -21,7 +21,7 @@ public class MenuResource {
     }
 
     @POST
-    @Path("")
+    @Path("/menu")
     public Response addCoffeeToMenu(@Valid NewCoffeeRequest newCoffeeRequest) {
         NewCoffeeParams newCoffeeParams =
             NewCoffeeParams.from(newCoffeeRequest.name, newCoffeeRequest.cost, newCoffeeRequest.ingredients.Chocolate, newCoffeeRequest.ingredients.Milk,

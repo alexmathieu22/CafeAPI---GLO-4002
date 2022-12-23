@@ -15,7 +15,6 @@ import ca.ulaval.glo4002.cafe.application.menu.MenuService;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
-import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
 
 import jakarta.validation.Valid;
 import jakarta.ws.rs.GET;

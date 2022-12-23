@@ -64,7 +64,7 @@ public class MenuServiceTest {
 
         verify(cafeRepository).saveOrUpdate(cafe);
     }
-    
+
     @Test
     public void whenGettingCoffeesFromCoffeeType_shouldGetCafe() {
         menuService.getCoffeesFromCoffeeTypes(A_COFFEE_TYPE_LIST);

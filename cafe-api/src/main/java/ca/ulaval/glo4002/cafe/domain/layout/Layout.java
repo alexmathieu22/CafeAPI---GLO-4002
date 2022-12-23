@@ -6,13 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import ca.ulaval.glo4002.cafe.domain.TipRate;
-import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNotFoundException;
 import ca.ulaval.glo4002.cafe.domain.exception.DuplicateCubeNameException;
 import ca.ulaval.glo4002.cafe.domain.exception.InsufficientSeatsException;
 import ca.ulaval.glo4002.cafe.domain.exception.NoGroupSeatsException;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.Cube;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeFactory;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;

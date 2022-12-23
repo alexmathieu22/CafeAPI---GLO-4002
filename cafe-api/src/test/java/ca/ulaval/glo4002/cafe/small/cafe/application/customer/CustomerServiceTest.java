@@ -14,6 +14,7 @@ import ca.ulaval.glo4002.cafe.application.customer.parameter.CheckOutCustomerPar
 import ca.ulaval.glo4002.cafe.application.customer.parameter.CustomerOrderParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;
 import ca.ulaval.glo4002.cafe.domain.CafeRepository;
+import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
 import ca.ulaval.glo4002.cafe.domain.inventory.Ingredient;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
@@ -24,7 +25,6 @@ import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.Customer;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerFactory;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerName;
-import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;

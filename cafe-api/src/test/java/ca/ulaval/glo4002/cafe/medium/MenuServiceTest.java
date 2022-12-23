@@ -5,7 +5,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
 import ca.ulaval.glo4002.cafe.application.menu.MenuService;
 import ca.ulaval.glo4002.cafe.application.menu.parameter.NewCoffeeParams;
 import ca.ulaval.glo4002.cafe.domain.Cafe;

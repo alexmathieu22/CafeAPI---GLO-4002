@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.cafe.small.cafe.domain.menu;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;

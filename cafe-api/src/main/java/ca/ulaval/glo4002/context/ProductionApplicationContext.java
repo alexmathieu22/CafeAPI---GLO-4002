@@ -10,6 +10,7 @@ import ca.ulaval.glo4002.cafe.api.exception.mapper.CatchallExceptionMapper;
 import ca.ulaval.glo4002.cafe.api.exception.mapper.ConstraintViolationExceptionMapper;
 import ca.ulaval.glo4002.cafe.api.inventory.InventoryResource;
 import ca.ulaval.glo4002.cafe.api.layout.LayoutResource;
+import ca.ulaval.glo4002.cafe.api.menu.MenuResource;
 import ca.ulaval.glo4002.cafe.api.operation.OperationResource;
 import ca.ulaval.glo4002.cafe.api.reservation.ReservationResource;
 import ca.ulaval.glo4002.cafe.application.configuration.ConfigurationService;
@@ -47,6 +48,7 @@ public class ProductionApplicationContext implements ApplicationContext {
         return new ResourceConfig().packages("ca.ulaval.glo4002.cafe").property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true)
             .register(new ConfigurationResource(configurationService))
             .register(new CustomerResource(customersService, menuService))
+            .register(new MenuResource(menuService))
             .register(new InventoryResource(inventoryService))
             .register(new LayoutResource(layoutService))
             .register(new OperationResource(operationService, customersService))
