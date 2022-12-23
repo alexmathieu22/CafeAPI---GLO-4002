@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import ca.ulaval.glo4002.cafe.domain.exception.DuplicateCoffeeNameException;
+import ca.ulaval.glo4002.cafe.domain.exception.InvalidMenuOrderException;
 
 public class Menu {
     private final Set<CoffeeType> defaultCoffees;
@@ -27,7 +28,7 @@ public class Menu {
     }
 
     public Coffee getCoffeeByCoffeeType(CoffeeType coffeeType) {
-        return coffees.stream().filter(coffee -> coffee.coffeeType().equals(coffeeType)).findFirst().get();
+        return coffees.stream().filter(coffee -> coffee.coffeeType().equals(coffeeType)).findFirst().orElseThrow(InvalidMenuOrderException::new);
     }
 
     public void clear() {

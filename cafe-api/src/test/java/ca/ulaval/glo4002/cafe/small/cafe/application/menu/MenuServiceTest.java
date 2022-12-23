@@ -32,7 +32,6 @@ public class MenuServiceTest {
     private CoffeeFactory coffeeFactory;
     private Cafe cafe;
 
-
     @BeforeEach
     public void instanciateAttributes() {
         cafeRepository = mock(CafeRepository.class);

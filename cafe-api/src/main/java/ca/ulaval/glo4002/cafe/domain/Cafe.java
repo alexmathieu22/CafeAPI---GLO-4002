@@ -172,7 +172,7 @@ public class Cafe {
 
     public void placeOrder(CustomerId customerId, Order order) {
         layout.verifyIfCustomerIsAlreadySeated(customerId);
-        orderingSystem.placeOrder(customerId, order, inventory);
+        orderingSystem.placeOrder(customerId, order, this.inventory);
     }
 
     public void addIngredientsToInventory(List<Ingredient> ingredients) {
