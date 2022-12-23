@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.cafe.small.cafe.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import ca.ulaval.glo4002.cafe.domain.billing.TipRate;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.Cube;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
 import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
 import ca.ulaval.glo4002.cafe.domain.taxing.LocationTax;
@@ -27,6 +29,7 @@ public class CafeFactoryTest {
     private static final ReservationType RESERVATION_STRATEGY_TYPE = ReservationType.Default;
     private static final TipRate GROUP_TIP_RATE = new TipRate(0);
     private static final LocationTax LOCATION_TAX = new LocationTax(CountryTax.None, Optional.empty(), Optional.empty());
+    private static final List<Coffee> COFFEES = new ArrayList<>();
 
     private CafeFactory cafeFactory;
 
@@ -37,7 +40,7 @@ public class CafeFactoryTest {
 
     @Test
     public void whenCreatingCafe_shouldHaveDefaultName() {
-        Cafe cafe = cafeFactory.createCafe(CUBE_SIZE, CAFE_NAME, RESERVATION_STRATEGY_TYPE, LOCATION_TAX, GROUP_TIP_RATE, CUBE_NAMES);
+        Cafe cafe = cafeFactory.createCafe(CUBE_SIZE, CAFE_NAME, RESERVATION_STRATEGY_TYPE, LOCATION_TAX, GROUP_TIP_RATE, CUBE_NAMES, COFFEES);
 
         assertEquals(CAFE_NAME, cafe.getName());
     }
@@ -46,7 +49,7 @@ public class CafeFactoryTest {
     public void whenCreatingCafe_shouldCreateCubesListWithSortedSpecificCubesNames() {
         List<CubeName> expectedCubeNames = List.of(new CubeName("Bloom"), new CubeName("Merryweather"), new CubeName("Tinker Bell"), new CubeName("Wanda"));
 
-        Cafe cafe = cafeFactory.createCafe(CUBE_SIZE, CAFE_NAME, RESERVATION_STRATEGY_TYPE, LOCATION_TAX, GROUP_TIP_RATE, CUBE_NAMES);
+        Cafe cafe = cafeFactory.createCafe(CUBE_SIZE, CAFE_NAME, RESERVATION_STRATEGY_TYPE, LOCATION_TAX, GROUP_TIP_RATE, CUBE_NAMES, COFFEES);
 
         assertEquals(expectedCubeNames, cafe.getLayout().getCubes().stream().map(Cube::getName).toList());
     }

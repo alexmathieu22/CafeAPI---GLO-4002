@@ -27,9 +27,8 @@ import ca.ulaval.glo4002.cafe.domain.layout.cube.seat.customer.CustomerId;
 import ca.ulaval.glo4002.cafe.domain.ordering.OrderingSystem;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Coffee;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.CoffeeType;
+import ca.ulaval.glo4002.cafe.domain.ordering.order.Menu;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
-import ca.ulaval.glo4002.cafe.domain.ordering.order.menu.Menu;
-import ca.ulaval.glo4002.cafe.domain.ordering.order.menu.MenuFactory;
 import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 import ca.ulaval.glo4002.cafe.domain.reservation.Reservation;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationStrategyFactory;
@@ -52,13 +51,12 @@ public class Cafe {
     private LocationTax locationTax;
     private ReservationStrategy reservationStrategy;
 
-    public Cafe(List<CubeName> cubeNames, CafeConfiguration cafeConfiguration) {
+    public Cafe(List<CubeName> cubeNames, List<Coffee> coffees, CafeConfiguration cafeConfiguration) {
         reservationStrategyFactory = new ReservationStrategyFactory();
         LayoutFactory layoutFactory = new LayoutFactory();
         this.layout = layoutFactory.createLayout(cafeConfiguration.cubeSize(), cubeNames);
         this.inventory = new Inventory();
-        MenuFactory menuFactory = new MenuFactory();
-        this.menu = menuFactory.createMenu();
+        this.menu = new Menu(coffees);
         this.orderingSystem = new OrderingSystem();
         this.billingSystem = new BillingSystem(new BillFactory());
         updateConfiguration(cafeConfiguration);
