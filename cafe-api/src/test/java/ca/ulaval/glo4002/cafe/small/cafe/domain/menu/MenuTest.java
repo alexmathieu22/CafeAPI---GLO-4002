@@ -22,13 +22,13 @@ public class MenuTest {
     private static final Coffee A_COFFEE = new Coffee(new CoffeeType("Latte"), new Amount(2.95f),
         new Recipe(Map.of(IngredientType.Espresso, new Quantity(50), IngredientType.Milk, new Quantity(50))));
 
-    private final List<Coffee> emptyListOfCoffees = new ArrayList<>();
     private final List<Coffee> listWithOneCoffee = new ArrayList<>(List.of(A_COFFEE));
     private Menu menu;
 
     @Test
     public void givenMenuWithACoffee_whenGettingCoffeeByCoffeeType_shouldReturnCorrectCoffee() {
-        menu = new Menu(listWithOneCoffee);
+        menu = new Menu();
+        menu.addDefaultCoffees(listWithOneCoffee);
 
         Coffee coffee = menu.getCoffeeByCoffeeType(new CoffeeType("Latte"));
 
@@ -37,14 +37,14 @@ public class MenuTest {
 
     @Test
     public void whenGettingCoffeeNotInMenu_shouldThrowInvalidMenuOrderException() {
-        menu = new Menu(List.of());
+        menu = new Menu();
 
         assertThrows(InvalidMenuOrderException.class, () -> menu.getCoffeeByCoffeeType(new CoffeeType("Latte")));
     }
 
     @Test
     public void whenAddingCoffeeToMenu_shouldAddCoffeeToMenu() {
-        menu = new Menu(emptyListOfCoffees);
+        menu = new Menu();
 
         menu.addCoffee(A_COFFEE);
 
@@ -53,14 +53,16 @@ public class MenuTest {
 
     @Test
     public void whenAddingCoffeeWithExistingCoffeeNameToMenu_shouldThrowDuplicateCoffeeNameException() {
-        menu = new Menu(listWithOneCoffee);
+        menu = new Menu();
+        menu.addDefaultCoffees(listWithOneCoffee);
 
         assertThrows(DuplicateCoffeeNameException.class, () -> menu.addCoffee(A_COFFEE));
     }
 
     @Test
     public void givenNonEmptyMenu_whenClearing_shouldKeepDefaultCoffees() {
-        menu = new Menu(listWithOneCoffee);
+        menu = new Menu();
+        menu.addDefaultCoffees(listWithOneCoffee);
 
         menu.clear();
 
@@ -69,7 +71,7 @@ public class MenuTest {
 
     @Test
     public void givenMenuWithAddedCoffee_whenClearing_shouldRemoveIt() {
-        menu = new Menu(emptyListOfCoffees);
+        menu = new Menu();
         menu.addCoffee(A_COFFEE);
 
         menu.clear();
