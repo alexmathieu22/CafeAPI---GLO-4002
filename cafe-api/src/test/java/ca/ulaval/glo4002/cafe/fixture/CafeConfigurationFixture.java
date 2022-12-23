@@ -2,23 +2,23 @@ package ca.ulaval.glo4002.cafe.fixture;
 
 import java.util.Optional;
 
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Province;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.State;
+import ca.ulaval.glo4002.cafe.domain.billing.TipRate;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
+import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
+import ca.ulaval.glo4002.cafe.domain.taxing.Location;
+import ca.ulaval.glo4002.cafe.domain.taxing.ProvinceTax;
+import ca.ulaval.glo4002.cafe.domain.taxing.StateTax;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
-import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 
 public class CafeConfigurationFixture {
     private CubeSize cubeSize = new CubeSize(4);
     private CafeName name = new CafeName("Les 4-Fées");
     private ReservationType reservationType = ReservationType.Default;
-    private Country country = Country.CA;
-    private Optional<Province> province = Optional.of(Province.QC);
-    private Optional<State> state = Optional.empty();
+    private CountryTax countryTax = CountryTax.CA;
+    private Optional<ProvinceTax> province = Optional.of(ProvinceTax.QC);
+    private Optional<StateTax> state = Optional.empty();
     private TipRate groupTipRate = new TipRate(0.05f);
 
     public CafeConfigurationFixture withCubeSize(CubeSize cubeSize) {
@@ -36,18 +36,18 @@ public class CafeConfigurationFixture {
         return this;
     }
 
-    public CafeConfigurationFixture withCountry(Country country) {
-        this.country = country;
+    public CafeConfigurationFixture withCountry(CountryTax countryTax) {
+        this.countryTax = countryTax;
         return this;
     }
 
-    public CafeConfigurationFixture withProvince(Province province) {
-        this.province = Optional.of(province);
+    public CafeConfigurationFixture withProvince(ProvinceTax provinceTax) {
+        this.province = Optional.of(provinceTax);
         return this;
     }
 
-    public CafeConfigurationFixture withState(State state) {
-        this.state = Optional.of(state);
+    public CafeConfigurationFixture withState(StateTax stateTax) {
+        this.state = Optional.of(stateTax);
         return this;
     }
 
@@ -57,6 +57,6 @@ public class CafeConfigurationFixture {
     }
 
     public CafeConfiguration build() {
-        return new CafeConfiguration(cubeSize, name, reservationType, new Location(country, province, state), groupTipRate);
+        return new CafeConfiguration(cubeSize, name, reservationType, new Location(countryTax, province, state), groupTipRate);
     }
 }

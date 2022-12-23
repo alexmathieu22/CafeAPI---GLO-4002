@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.domain.Cafe;
+import ca.ulaval.glo4002.cafe.domain.billing.TipRate;
 import ca.ulaval.glo4002.cafe.domain.billing.bill.Bill;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerAlreadyVisitedException;
 import ca.ulaval.glo4002.cafe.domain.exception.CustomerNoBillException;
@@ -17,9 +18,6 @@ import ca.ulaval.glo4002.cafe.domain.exception.InsufficientIngredientsException;
 import ca.ulaval.glo4002.cafe.domain.exception.InsufficientSeatsException;
 import ca.ulaval.glo4002.cafe.domain.exception.NoGroupSeatsException;
 import ca.ulaval.glo4002.cafe.domain.exception.NoReservationsFoundException;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Province;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.State;
 import ca.ulaval.glo4002.cafe.domain.inventory.IngredientType;
 import ca.ulaval.glo4002.cafe.domain.inventory.Quantity;
 import ca.ulaval.glo4002.cafe.domain.layout.Layout;
@@ -38,9 +36,11 @@ import ca.ulaval.glo4002.cafe.domain.reservation.GroupName;
 import ca.ulaval.glo4002.cafe.domain.reservation.GroupSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.Reservation;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
+import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
+import ca.ulaval.glo4002.cafe.domain.taxing.ProvinceTax;
+import ca.ulaval.glo4002.cafe.domain.taxing.StateTax;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
-import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 import ca.ulaval.glo4002.cafe.fixture.CafeConfigurationFixture;
 import ca.ulaval.glo4002.cafe.fixture.CustomerFixture;
 import ca.ulaval.glo4002.cafe.fixture.OrderFixture;
@@ -312,10 +312,10 @@ public class CafeTest {
 
     @Test
     public void givenNewLocation_whenUpdatingConfiguration_shouldUpdateLocation() {
-        Cafe cafe = new Cafe(SOME_CUBE_NAMES, new CafeConfigurationFixture().withCountry(Country.CL).build());
+        Cafe cafe = new Cafe(SOME_CUBE_NAMES, new CafeConfigurationFixture().withCountry(CountryTax.CL).build());
         cafe.addIngredientsToInventory(AN_ORDER.ingredientsNeeded());
 
-        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(Country.None).build());
+        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(CountryTax.None).build());
         Customer aCustomer = new CustomerFixture().build();
         cafe.checkIn(aCustomer, Optional.empty());
         cafe.placeOrder(aCustomer.getId(), AN_ORDER);
@@ -531,7 +531,7 @@ public class CafeTest {
     @Test
     public void givenOrdersMade_whenGettingBill_shouldHaveTotalAccordingToSubtotalAndTaxes() {
         Cafe cafe = cafeWithEnoughInventory();
-        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(Country.CL).build());
+        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(CountryTax.CL).build());
         Customer aCustomer = new CustomerFixture().build();
         cafe.checkIn(aCustomer, Optional.empty());
         cafe.placeOrder(aCustomer.getId(), AN_ORDER);
@@ -548,7 +548,7 @@ public class CafeTest {
     @Test
     public void givenCountryWithProvince_whenGettingBill_shouldCalculateFederalAndProvincialTaxes() {
         Cafe cafe = cafeWithEnoughInventory();
-        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(Country.CA).withProvince(Province.QC).build());
+        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(CountryTax.CA).withProvince(ProvinceTax.QC).build());
         Customer aCustomer = new CustomerFixture().build();
         cafe.checkIn(aCustomer, Optional.empty());
         cafe.placeOrder(aCustomer.getId(), AN_ORDER);
@@ -563,7 +563,7 @@ public class CafeTest {
     @Test
     public void givenCountryWithState_whenGettingBill_shouldCalculateFederalAndStateTaxes() {
         Cafe cafe = cafeWithEnoughInventory();
-        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(Country.US).withState(State.FL).build());
+        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(CountryTax.US).withState(StateTax.FL).build());
         Customer aCustomer = new CustomerFixture().build();
         cafe.checkIn(aCustomer, Optional.empty());
         cafe.placeOrder(aCustomer.getId(), AN_ORDER);
@@ -608,7 +608,7 @@ public class CafeTest {
     @Test
     public void givenCountryWithOnlyFederalTax_whenGettingBill_shouldCalculateFederalTax() {
         Cafe cafe = cafeWithEnoughInventory();
-        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(Country.CL).build());
+        cafe.updateConfiguration(new CafeConfigurationFixture().withCountry(CountryTax.CL).build());
         Customer aCustomer = new CustomerFixture().build();
         cafe.checkIn(aCustomer, Optional.empty());
         cafe.placeOrder(aCustomer.getId(), AN_ORDER);

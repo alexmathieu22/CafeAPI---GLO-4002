@@ -1,9 +1,8 @@
-package ca.ulaval.glo4002.cafe.domain.geolocalisation;
+package ca.ulaval.glo4002.cafe.domain.taxing;
 
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidConfigurationCountryException;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
 
-public enum Province {
+public enum ProvinceTax {
     AB(new Tax(0)),
     BC(new Tax(0.07f)),
     MB(new Tax(0.07f)),
@@ -20,20 +19,20 @@ public enum Province {
 
     private final Tax tax;
 
-    Province(Tax tax) {
+    ProvinceTax(Tax tax) {
         this.tax = tax;
     }
 
-    public static Province fromString(String province) {
-        if (Province.contains(province)) {
-            return Province.valueOf(province);
+    public static ProvinceTax fromString(String province) {
+        if (ProvinceTax.contains(province)) {
+            return ProvinceTax.valueOf(province);
         }
         throw new InvalidConfigurationCountryException();
     }
 
     private static boolean contains(String other) {
-        for (Province province : Province.values()) {
-            if (province.name().equals(other)) {
+        for (ProvinceTax provinceTax : ProvinceTax.values()) {
+            if (provinceTax.name().equals(other)) {
                 return true;
             }
         }

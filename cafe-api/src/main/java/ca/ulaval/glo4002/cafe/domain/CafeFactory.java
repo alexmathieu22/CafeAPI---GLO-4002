@@ -3,14 +3,14 @@ package ca.ulaval.glo4002.cafe.domain;
 import java.util.List;
 import java.util.Optional;
 
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
+import ca.ulaval.glo4002.cafe.domain.billing.TipRate;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
+import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
+import ca.ulaval.glo4002.cafe.domain.taxing.Location;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
-import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 
 public class CafeFactory {
     private static final CafeName CAFE_NAME = new CafeName("Les 4-Fées");
@@ -20,7 +20,7 @@ public class CafeFactory {
             new CubeName("Bloom"), new CubeName("Merryweather"));
     private static final ReservationType RESERVATION_STRATEGY_TYPE = ReservationType.Default;
     private static final TipRate GROUP_TIP_RATE = new TipRate(0);
-    private static final Location LOCATION = new Location(Country.None, Optional.empty(), Optional.empty());
+    private static final Location LOCATION = new Location(CountryTax.None, Optional.empty(), Optional.empty());
 
     public Cafe createCafe() {
         CafeConfiguration cafeConfiguration = new CafeConfiguration(CUBE_SIZE, CAFE_NAME, RESERVATION_STRATEGY_TYPE, LOCATION, GROUP_TIP_RATE);

@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.cafe.application.parameter;
 
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
+import ca.ulaval.glo4002.cafe.domain.billing.TipRate;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
+import ca.ulaval.glo4002.cafe.domain.taxing.Location;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
-import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 
 public record ConfigurationParams(CubeSize cubeSize, CafeName cafeName, ReservationType reservationType, Location location, TipRate groupTipRate) {
     public ConfigurationParams(int cubeSize, String cafeName, String reservationType, String country, String province, String state, float groupTipRate) {

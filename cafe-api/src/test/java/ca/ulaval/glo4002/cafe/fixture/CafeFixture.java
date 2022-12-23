@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import ca.ulaval.glo4002.cafe.domain.Cafe;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Province;
+import ca.ulaval.glo4002.cafe.domain.billing.TipRate;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeName;
 import ca.ulaval.glo4002.cafe.domain.layout.cube.CubeSize;
 import ca.ulaval.glo4002.cafe.domain.reservation.ReservationType;
+import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
+import ca.ulaval.glo4002.cafe.domain.taxing.Location;
+import ca.ulaval.glo4002.cafe.domain.taxing.ProvinceTax;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeConfiguration;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.CafeName;
-import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 
 public class CafeFixture {
     private static final ReservationType RESERVATION_STRATEGY_TYPE = ReservationType.Default;
@@ -21,7 +21,7 @@ public class CafeFixture {
     private CafeName name = new CafeName("Les 4-Fées");
     private CubeSize cubeSize = new CubeSize(4);
     private TipRate groupTipRate = new TipRate(0.05f);
-    private Location location = new Location(Country.CA, Optional.of(Province.AB), Optional.empty());
+    private Location location = new Location(CountryTax.CA, Optional.of(ProvinceTax.AB), Optional.empty());
 
     public CafeFixture withName(CafeName name) {
         this.name = name;

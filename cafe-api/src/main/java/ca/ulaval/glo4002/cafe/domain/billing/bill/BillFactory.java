@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.cafe.domain.billing.bill;
 
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
+import ca.ulaval.glo4002.cafe.domain.billing.TipRate;
 import ca.ulaval.glo4002.cafe.domain.ordering.order.Order;
+import ca.ulaval.glo4002.cafe.domain.taxing.Tax;
 import ca.ulaval.glo4002.cafe.domain.valueobjects.Amount;
-import ca.ulaval.glo4002.cafe.domain.valueobjects.TipRate;
 
 public class BillFactory {
     public Bill createBill(Order order, Tax taxRate, TipRate groupTipRate, boolean isInGroup) {

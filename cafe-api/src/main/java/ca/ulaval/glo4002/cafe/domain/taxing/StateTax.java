@@ -1,9 +1,8 @@
-package ca.ulaval.glo4002.cafe.domain.geolocalisation;
+package ca.ulaval.glo4002.cafe.domain.taxing;
 
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidConfigurationCountryException;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
 
-public enum State {
+public enum StateTax {
     AL(new Tax(0.04f)),
     AZ(new Tax(0.056f)),
     CA(new Tax(0.0725f)),
@@ -14,20 +13,20 @@ public enum State {
 
     private final Tax tax;
 
-    State(Tax tax) {
+    StateTax(Tax tax) {
         this.tax = tax;
     }
 
-    public static State fromString(String state) {
-        if (State.contains(state)) {
-            return State.valueOf(state);
+    public static StateTax fromString(String state) {
+        if (StateTax.contains(state)) {
+            return StateTax.valueOf(state);
         }
         throw new InvalidConfigurationCountryException();
     }
 
     private static boolean contains(String other) {
-        for (State state : State.values()) {
-            if (state.name().equals(other)) {
+        for (StateTax stateTax : StateTax.values()) {
+            if (stateTax.name().equals(other)) {
                 return true;
             }
         }

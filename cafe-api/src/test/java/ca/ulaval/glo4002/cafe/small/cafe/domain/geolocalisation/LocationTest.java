@@ -5,11 +5,11 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.cafe.domain.exception.InvalidConfigurationCountryException;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Country;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Location;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.Province;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.State;
-import ca.ulaval.glo4002.cafe.domain.geolocalisation.taxing.Tax;
+import ca.ulaval.glo4002.cafe.domain.taxing.CountryTax;
+import ca.ulaval.glo4002.cafe.domain.taxing.Location;
+import ca.ulaval.glo4002.cafe.domain.taxing.ProvinceTax;
+import ca.ulaval.glo4002.cafe.domain.taxing.StateTax;
+import ca.ulaval.glo4002.cafe.domain.taxing.Tax;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,8 +22,8 @@ public class LocationTest {
 
     @Test
     public void givenLocationWithCountryAndProvince_whenGettingTaxPercentage_shouldReturnRightTaxPercentage() {
-        Location location = new Location(Country.CA, Optional.of(Province.QC), Optional.empty());
-        Tax expectedTax = Country.CA.getTax().add(Province.QC.getTax());
+        Location location = new Location(CountryTax.CA, Optional.of(ProvinceTax.QC), Optional.empty());
+        Tax expectedTax = CountryTax.CA.getTax().add(ProvinceTax.QC.getTax());
 
         Tax taxReceived = location.getTaxPercentage();
 
@@ -32,8 +32,8 @@ public class LocationTest {
 
     @Test
     public void givenLocationWithCountryAndState_whenGettingTaxPercentage_shouldReturnRightTaxPercentage() {
-        Location location = new Location(Country.US, Optional.empty(), Optional.of(State.CA));
-        Tax expectedTax = Country.US.getTax().add(State.CA.getTax());
+        Location location = new Location(CountryTax.US, Optional.empty(), Optional.of(StateTax.CA));
+        Tax expectedTax = CountryTax.US.getTax().add(StateTax.CA.getTax());
 
         Tax taxReceived = location.getTaxPercentage();
 
@@ -42,8 +42,8 @@ public class LocationTest {
 
     @Test
     public void givenLocationWithOnlyCountry_whenGettingTaxPercentage_shouldReturnRightTaxPercentage() {
-        Location location = new Location(Country.CL, Optional.empty(), Optional.empty());
-        Tax expectedTax = Country.CL.getTax();
+        Location location = new Location(CountryTax.CL, Optional.empty(), Optional.empty());
+        Tax expectedTax = CountryTax.CL.getTax();
 
         Tax taxReceived = location.getTaxPercentage();
 
@@ -52,8 +52,8 @@ public class LocationTest {
 
     @Test
     public void givenLocationWithNoneCountry_whenGettingTaxPercentage_shouldReturnZero() {
-        Location location = new Location(Country.None, Optional.empty(), Optional.empty());
-        Tax expectedTax = Country.None.getTax();
+        Location location = new Location(CountryTax.None, Optional.empty(), Optional.empty());
+        Tax expectedTax = CountryTax.None.getTax();
 
         Tax taxReceived = location.getTaxPercentage();
 
