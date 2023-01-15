@@ -18,7 +18,7 @@ Ce projet a été réalisé dans le cadre du cours de Qualité et métriques du 
 
 _Le setup est recommandé pour IntelliJ_
 
-* À partir du [Github](https://github.com/GLO4002UL/projet2022-eq14.git) du projet, cloner le projet sur votre poste de travail.
+* À partir du [Github](https://github.com/alexmathieu22/CafeAPI-GLO-4002.git) du projet, cloner le projet sur votre poste de travail.
 
 * Installer la bonne version de Java.
 
