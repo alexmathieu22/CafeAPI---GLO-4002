@@ -86,5 +86,5 @@ Sélectionner le fichier checkstyle.xml à la root du projet
 
 # Conventions et Processus
 
-Pour plus de détails sur les méthodologies, conventions et processus employés par l'équipe, consultez le [wiki](https://github.com/GLO4002UL/projet2022-eq14/wiki).
+Pour plus de détails sur les méthodologies, conventions et processus employés par l'équipe, consultez le [wiki](https://github.com/alexmathieu22/CafeAPI-GLO-4002/wiki).
 
