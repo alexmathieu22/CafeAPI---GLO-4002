@@ -1,3 +1,7 @@
+# DISCLAIMER
+Ce projet a été réalisé dans le cadre du cours de Qualité et métriques du logiciel (GLO-4002) de l'Université Laval à la session d'automne 2022. Il a été réalisé par Christophe Duchesne, Thomas Mondor, Nathan Paquet, Antony Martel, Jonathan Bessette, Alexandre Aubut, Ines Mrabet, Laurence Campeau et moi-même. Le commit initial du bot github-classroom correspond au travail réalisé avec toute l'équipe et les commits suivants correspondent à la partie individuelle du projet que j'ai réalisé ensuite.
+
+
 # Requis
 
 * Java 18 (openJDK seulement)
